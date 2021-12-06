@@ -1,0 +1,220 @@
+<!doctype HTML>
+<html>
+
+<head>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-136675623-1"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+
+        gtag('config', 'UA-136675623-1');
+    </script>
+    <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+</head>
+<script src="https://aframe.io/releases/0.8.0/aframe.min.js"></script>
+<script src="https://rawgit.com/jeromeetienne/AR.js/master/aframe/build/aframe-ar.min.js"></script>
+<script src="https://rawgit.com/donmccurdy/aframe-extras/master/dist/aframe-extras.loaders.min.js"></script>
+
+<!--<script src="https://rawgit.com/nicolocarpignoli/nicolocarpignoli.github.io/master/ar-playground/events.js"></script>-->
+<!--<script src="https://cdn.rawgit.com/elbobo/aframe-multisrc-component/b6d23310/dist/0.3/aframe-multisrc-component.js"></script>-->
+<script src="scripts/multisrc.js"></script>
+
+<body style='margin : 0px; overflow: hidden;'>
+    <!-- we add detectionMode and matrixCodeType to tell AR.js to recognize barcode markers -->
+    <a-scene embedded
+        arjs='sourceType: webcam; debugUIEnabled: false; detectionMode: mono_and_matrix; matrixCodeType: 3x3;'>
+        <!-- Default lighting injected by A-Frame. -->
+        <a-entity light="type: ambient; color: #BBB; intensity: 1"></a-entity>
+        <!--<a-entity light="type: directional; color: #FFF; intensity: .6" rotation="0 0 0" position="0 1 1"></a-entity>-->
+
+        <!--<a-entity id="luz" light="type: directional; color: #FFF; intensity: 1" rotation="45 0 0" position="0 .1 -.02"></a-entity>-->
+
+        <a-entity id="luz" light="intensity:.6" position="0 -0.00573 0.38769"></a-entity>
+        <a-entity id="luz2" light="intensity:1" position="0 -0.19606 0.38769" rotation="-5.53 0 0"></a-entity>
+        <a-assets>
+
+            <img id="mensaje" src="images/mensaje.png" alt="black">
+            <img id="imgImpresion" src="images/impresion.png" alt="black">
+            <img id="imgMDF" src="images/MDF.png" alt="black">
+            <img id="imgAcril" src="images/acrilico.png" alt="black">
+            <img id="imgAcero" src="images/acero.png" alt="black">
+            <img id="imgRojo" src="images/rojo.png" alt="black">
+            <a-asset-item id="mdfMod" src="modelos/laser/corte.gltf"></a-asset-item>
+            <a-asset-item id="acrilMod" src="modelos/acril/scene.gltf"></a-asset-item>
+            <a-asset-item id="aceroMod" src="modelos/acero/corte.gltf"></a-asset-item>
+            <a-asset-item id="robotMod" src="modelos/robot/scene.gltf"></a-asset-item>
+
+        </a-assets>
+
+
+        <a-marker markerhandler emitevents="true" cursor="fuse: false; rayOrigin: mouse" type='pattern'
+            url='impresion-marker.patt'>
+
+
+
+            <a-entity id="escenaId" position="0 0 0" scale="1 1 1" rotation="0 0 0">
+                <!---->
+                <a-entity id="acrilId" visible="false" rotation="-20 0 0" position="0 1.5 -1">
+                    <a-entity rotation="0 0 0">
+                        <a-entity rotation="0 0 45">
+                            <a-entity rotation="90 0 0">
+                                <a-entity gltf-model="#acrilMod" rotation="0 180 0" scale=".25 .25 .25"
+                                    position="-.5 0 .5">
+                                </a-entity>
+
+
+                            </a-entity>
+                        </a-entity>
+                        <a-animation attribute="rotation" dur="5000" to="0 360 0" easing="linear" repeat="indefinite">
+                        </a-animation>
+                    </a-entity>
+                </a-entity>
+
+                <a-entity id="robotId" gltf-model="#robotMod" scale=".05 .05 .05" visible="true" rotation="0 0 0"
+                    position="0 .1 0" animation-mixer>
+
+                </a-entity>
+
+                <a-entity id="mdfId" rotation="-20 0 0" visible="false" position="0 1.5 -1">
+                    <a-entity rotation="0 0 0">
+                        <a-entity rotation="0 0 45">
+                            <a-entity gltf-model="#mdfMod" rotation="90 0 0">
+
+                            </a-entity>
+                        </a-entity>
+                        <a-animation attribute="rotation" dur="5000" to="0 360 0" easing="linear" repeat="indefinite">
+                        </a-animation>
+                    </a-entity>
+                </a-entity>
+
+
+
+
+                <a-entity id="aceroId" rotation="-20 0 0" visible="false" position="0 1.5 -1">
+                    <a-entity rotation="0 0 0">
+                        <a-entity rotation="0 0 45" scale="1 1 .1">
+                            <a-entity gltf-model="#aceroMod" rotation="80 0 0">
+
+                            </a-entity>
+                        </a-entity>
+                        <a-animation attribute="rotation" dur="5000" to="0 360 0" easing="linear" repeat="indefinite">
+                        </a-animation>
+                    </a-entity>
+                </a-entity>
+
+                <a-entity rotation="0 0 0">
+                    <a-cylinder id="baseId" rotation="0 90 0" position="0 0 0" radius="1" height=".1"
+                        multisrc="srcs:#imgRojo,#imgImpresion,#imgImpresion"></a-cylinder>
+
+                    <a-cylinder id="cilinId" position="0 -.3 0" radius="1" height=".3"
+                        multisrc="srcs:#mensaje,#imgImpresion,#imgImpresion">
+                        <a-animation attribute="rotation" dur="10000" to="0 360 0" easing="linear" direction="reverse"
+                            repeat="indefinite">
+                        </a-animation>
+                    </a-cylinder>
+                </a-entity>
+
+
+
+
+
+            </a-entity>
+        </a-marker>
+        <!--<a-obj-model id="prueba" src="modelos/ipn/ipn.obj" mtl="modelos/ipn/ipn.mtl" scale="1000 1000 1000"></a-obj-model>-->
+
+
+
+        <a-plane position="-.01 -.03 -.1" width=".02" height=".006" opacity=".3" material="src: images/powvector.png">
+        </a-plane>
+
+        <a-plane id="botonVecId" position="-.05 -0.029 -.099" width=".1" height=".03" opacity="0"></a-plane>
+
+
+        <a-plane position=".015 -.03 -.1" width=".013" height=".01" opacity=".3" material="src: images/wa2.png">
+        </a-plane>
+        <a-plane id="botonWaId" position="0.05 -0.029 -.099" width=".1" height=".03" opacity="0"></a-plane>
+        <!-- use this <a-entity camera> to support multiple-markers, otherwise use <a-marker-camera> instead of </a-marker> -->
+        <a-entity camera></a-entity>
+    </a-scene>
+
+</body>
+
+<script>
+    var mdf = document.getElementById("mdfId");
+    var acril = document.getElementById("acrilId");
+    var acero = document.getElementById("aceroId");
+    var robot = document.getElementById("robotId");
+
+    var base = document.getElementById("baseId");
+    var botonWa = document.getElementById("botonWaId");
+    var botonVec = document.getElementById("botonVecId");
+
+    var numElem = 1;
+
+    botonVec.addEventListener("click", function (e) {
+        window.open("https://www.vectorid.mx/");
+    });
+    botonWa.addEventListener("click", function (e) {
+        window.open("https://api.whatsapp.com/send?phone=+5215584151591&text=Hola!%20quiero%20saber%20más%20sobre%20los%20servicios%20de%20corte%20láser%20e%20impresión%203D!");
+    });
+    /**/
+    window.setInterval(function (e) {
+        switch (numElem) {
+            case 0:
+                {
+                    robot.setAttribute("visible", true);
+                    mdf.setAttribute("visible", false);
+                    acril.setAttribute("visible", false);
+                    acero.setAttribute("visible", false);
+
+                    base.setAttribute("multisrc", "srcs:#imgRojo,#imgImpresion,#imgImpresion");
+                    document.getElementById("luz").setAttribute("light", { intensity: .6 });
+                    console.log("0");
+
+                } break;
+            case 1:
+                {
+                    robot.setAttribute("visible", false);
+                    mdf.setAttribute("visible", true);
+                    acril.setAttribute("visible", false);
+                    acero.setAttribute("visible", false);
+                    document.getElementById("luz").setAttribute("light", { intensity: 3 });
+                    base.setAttribute("multisrc", "srcs:#imgRojo,#imgMDF,#imgMDF");
+
+
+                    console.log("1");
+                } break;
+            case 2:
+                {
+                    robot.setAttribute("visible", false);
+                    mdf.setAttribute("visible", false);
+                    acril.setAttribute("visible", true);
+                    acero.setAttribute("visible", false);
+                    base.setAttribute("multisrc", "srcs:#imgRojo,#imgAcril,#imgAcril");
+
+                    console.log("2");
+                } break;
+            case 3:
+                {
+                    robot.setAttribute("visible", false);
+                    mdf.setAttribute("visible", false);
+                    acril.setAttribute("visible", false);
+                    acero.setAttribute("visible", true);
+                    base.setAttribute("multisrc", "srcs:#imgRojo,#imgAcero,#imgAcero");
+
+                    console.log("3");
+                } break;
+
+        }
+
+        numElem++;
+        if (numElem >= 4) {
+            numElem = 0;
+        }
+    }, 6000);
+
+</script>
+
+</html>

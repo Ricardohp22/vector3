@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-136675623-1"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+
+        gtag('config', 'UA-136675623-1');
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>DentalVR</title>
+    <!-- <script src="scripts/aframe.js"></script> -->
+    <!-- <script src="https://aframe.io/releases/0.8.0/aframe.min.js"></script> -->
+    <!-- <script src="scripts/aframe.js"></script>
+    <script src="scripts/gif.js"> </script> -->
+    <link href="https://fonts.googleapis.com/css?family=Anton&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+
+    <div id="instrucciones">
+        <div id="videoDemo">
+            <div id="salirVideo">
+                <img src="images/equis.png" alt="">
+            </div>
+            <video id="vid" src="video/demoDentalEdit.mp4" controls></video>
+        </div>
+
+        <div class="container contInst">
+            <img src="images/logopp.png" alt="">
+            <div class="anton contRecord"><span class="azul">Record Actual:</span><span id="recordInst">No</span></div>
+
+            <p id="bienvenida">
+                Bienvenidos a <span class="anton azul" style="font-weight: 100">Healthy Mouth Game</span>, el juego de
+                Realidad Aumentada que pondra a prueba tu punteria!!
+            </p>
+            <!-- <button onClick="startGame()">Jugar</button> -->
+            <a href="juego.html"  target="_self"><button onclick="">Jugar</button></a>
+
+            <button onClick="verDemo()">Ver demo</button>
+            <h6 class="azul anton">Dinamica del Juego</h6>
+            <ol id="listaInst">
+                <li>Busca con tu camara a tu alrededor las muelas con caries</li>
+                <li>Apunta con la mirilla y dispara tocando la pantalla</li>
+                <li>Entre mas muelas con caries elimines mas puntos conseguiras</li>
+                <li>Evita disparar a los objetos que ayudan a cuidar tu boca</li>
+                <li>Diviertete y trata de superar el record actual!!</li>
+            </ol>
+
+            <p id="nota">
+                Nota: Recuerda que debes permitir el acceso a tu camara para jugar juegos de Realidad Aumentada
+            </p>
+
+        </div>
+
+    </div>
+    <footer>
+        <img src="images/powvector.png" alt="">
+    </footer>
+
+
+
+    </a-entity>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+    <script src="https://www.gstatic.com/firebasejs/6.2.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/3.1.0/firebase-database.js"></script>
+    <script src="scripts/index.js"></script>
+</body>
+
+</html>

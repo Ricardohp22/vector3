@@ -1,0 +1,54 @@
+<!doctype HTML>
+<html>
+
+<head>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-136675623-1"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+
+        gtag('config', 'UA-136675623-1');
+
+    </script>
+    <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+</head>
+<script src="https://aframe.io/releases/1.0.0/aframe.min.js"></script>
+<script src="https://rawgit.com/jeromeetienne/AR.js/master/aframe/build/aframe-ar.min.js"></script>
+<script src="https://rawgit.com/donmccurdy/aframe-extras/master/dist/aframe-extras.loaders.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script
+    src="https://rawgit.com/mayognaise/aframe-mouse-cursor-component/master/dist/aframe-mouse-cursor-component.min.js"></script>
+
+
+<link rel="stylesheet" href="css/styles.css">
+
+<body style='margin : 0px; overflow: hidden;' id="cuerpo">
+    <div class="contLogo">
+        <img src="images/powvector.png" alt="Powered by VectorId">
+    </div>
+    <!-- we add detectionMode and matrixCodeType to tell AR.js to recognize barcode markers -->
+    <a-scene embedded arjs="sourceType: webcam; debugUIEnabled: false; patternRatio: 0.8; borderColor: #FF0D4A;"
+        cursor="rayOrigin: mouse">
+        <a-assets>
+
+        </a-assets>
+        <a-marker markerhandler emitevents="true" type="pattern" url="pattern-qr_ra_6_rosa.patt">
+
+            <a-box position="0 0 0" rotation="30 30 0" color="skyblue">
+                <a-animation attribute="rotation" begin="click" dur="3500" fill="backwards" to="30 30 360">
+                </a-animation>
+
+            </a-box>
+        </a-marker>
+
+
+
+
+        <a-entity camera look-controls mouse-cursor></a-entity>
+    </a-scene>
+
+</body>
+
+</html>

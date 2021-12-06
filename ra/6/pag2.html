@@ -1,0 +1,36 @@
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1.0,user-scalable=no,maximum-scale=1,width=device-width">
+    <title>A-Frame Mouse Cursor Component - Embedded</title>
+    <script src="https://aframe.io/releases/1.0.0/aframe.min.js"></script>
+<script src="https://rawgit.com/mayognaise/aframe-mouse-cursor-component/master/dist/aframe-mouse-cursor-component.min.js"></script>
+    <style>
+      body {
+        max-width: 70vw;
+        margin: 2vw;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>My awesome embedded VR scene</h1>
+    <p>You should be able to embed your scene in a blog post, and still have the mouse cursor work.</p>
+    <p>Now I'm just filling this space deliberately, to make the scene somewhere in the page...</p>
+
+    <a-scene embedded="true" cursor="rayOrigin: mouse">
+      <a-box position="0 3.5 -2" rotation="30 30 0" color="skyblue">
+             <a-animation attribute="rotation" begin="click" dur="3500" fill="backwards" to="30 30 360"></a-animation>
+        
+      </a-box>
+
+      <a-sky color="pink"></a-sky>
+
+      <a-entity position="0 1.8 4">
+        <a-entity camera look-controls mouse-cursor>
+            <a-cursor fuse="true" color="yellow"></a-cursor>
+        </a-entity>
+      </a-entity>
+
+    </a-scene>
+  </body>
+</html>

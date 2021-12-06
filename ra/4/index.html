@@ -1,0 +1,500 @@
+<!doctype HTML>
+<html>
+
+<head>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-136675623-1"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+
+        gtag('config', 'UA-136675623-1');
+    </script>
+    <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+</head>
+<script src="https://aframe.io/releases/0.8.0/aframe.min.js"></script>
+<script src="https://rawgit.com/jeromeetienne/AR.js/master/aframe/build/aframe-ar.min.js"></script>
+<script src="https://rawgit.com/donmccurdy/aframe-extras/master/dist/aframe-extras.loaders.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script>
+    var isTargetFound = false;
+    var interacted = false;
+    var cuenta2 = 0;
+    AFRAME.registerComponent("markerhandler", {
+        init: function () {
+            console.log('markerhandler-init');
+
+            markerObj = document.querySelector('a-marker');
+            markerObj.hidden = true;
+
+            //dino.setAttribute('animation-mixer', {clip: 'C4D Animation Take', loop: 'repeat'});
+        },
+
+        tick: function () {
+
+            if (markerObj != null) {
+                if (markerObj.object3D.visible == true) {
+
+                    if (isTargetFound)
+                        return;
+
+                    isTargetFound = true;
+                    console.log("marker visible");
+                    cuenta2++;
+                    if (cuenta2 == 1) {
+                        document.getElementById("qr").emit("qrout");
+                        document.getElementById("plane").emit("planeout");
+                        document.getElementById("swipe").emit("planein");
+                        //animaciones inician
+                        document.getElementById("foco").emit("focoIn");
+                        document.getElementById("ene").emit("eneIn");
+                        window.setTimeout(function (e) {
+                            document.getElementById("foco").emit("focoOut");
+                            document.getElementById("ene").emit("eneOut");
+                        }, 4000);
+                        window.setTimeout(function (e) {
+                            document.getElementById("integrantes").emit("inteIn");
+                        }, 4500);
+                        window.setTimeout(function (e) {
+                            document.getElementById("integrantes").emit("inteOut");
+                        }, 6500);
+
+                        window.setTimeout(function (e) {
+                            document.getElementById("description").emit("descIn");
+                            document.getElementById("fotoInte").emit("fotoIn");
+                        }, 6500);
+                        window.setTimeout(function (e) {
+                            document.getElementById("description").emit("descOut");
+                            document.getElementById("fotoInte").emit("fotoOut");
+                        }, 8500);
+                        window.setTimeout(function (e) {
+                            document.getElementById("description").setAttribute("material", { src: "images/ec.png" });
+                            document.getElementById("fotoInte").setAttribute("material", { src: "images/ecf.png" });
+
+                            document.getElementById("description").emit("descIn");
+                            document.getElementById("fotoInte").emit("fotoIn");
+                        }, 10000);
+                        window.setTimeout(function (e) {
+                            document.getElementById("description").emit("descOut");
+                            document.getElementById("fotoInte").emit("fotoOut");
+                        }, 12000);
+                        window.setTimeout(function (e) {
+                            document.getElementById("description").setAttribute("material", { src: "images/if.png" });
+                            document.getElementById("fotoInte").setAttribute("material", { src: "images/iff.png" });
+
+                            document.getElementById("description").emit("descIn");
+                            document.getElementById("fotoInte").emit("fotoIn");
+                        }, 13500);
+                        window.setTimeout(function (e) {
+                            document.getElementById("description").emit("descOut");
+                            document.getElementById("fotoInte").emit("fotoOut");
+                        }, 15500);
+                        window.setTimeout(function (e) {
+                            document.getElementById("description").setAttribute("material", { src: "images/ps.png" });
+                            document.getElementById("fotoInte").setAttribute("material", { src: "images/psf.png" });
+
+                            document.getElementById("description").emit("descIn");
+                            document.getElementById("fotoInte").emit("fotoIn");
+                        }, 17000);
+                        window.setTimeout(function (e) {
+                            document.getElementById("description").emit("descOut");
+                            document.getElementById("fotoInte").emit("fotoOut");
+                        }, 19000);
+                        window.setTimeout(function (e) {
+                            document.getElementById("description").setAttribute("material", { src: "images/rs.png" });
+                            document.getElementById("fotoInte").setAttribute("material", { src: "images/rsf.png" });
+
+                            document.getElementById("description").emit("descIn");
+                            document.getElementById("fotoInte").emit("fotoIn");
+                        }, 20500);
+                        window.setTimeout(function (e) {
+                            document.getElementById("description").emit("descOut");
+                            document.getElementById("fotoInte").emit("fotoOut");
+                        }, 22500);
+                        window.setTimeout(function (e) {
+                            document.getElementById("description").setAttribute("position", { y: 50 });
+                            document.getElementById("fotoInte").setAttribute("position", { y: 50 });
+                            document.getElementById("logoMabs").emit("logoIn");
+                            document.getElementById("letrasMabs").emit("letrasMIn");
+                        }, 23500);
+                    }
+
+                }
+                else {
+
+                    if (!isTargetFound)
+                        return;
+
+                    isTargetFound = false;
+                    console.log("marker invisible");
+
+                }
+            }
+        }
+    });
+</script>
+
+<body style='margin : 0px; overflow: hidden;' id="cuerpo">
+    <!-- we add detectionMode and matrixCodeType to tell AR.js to recognize barcode markers -->
+    <a-scene embedded arjs="sourceType: webcam; debugUIEnabled: false; patternRatio: 0.8;">
+        <a-assets>
+
+        </a-assets>
+        <a-marker markerhandler emitevents="true" cursor="fuse: false; rayOrigin: mouse" type="pattern"
+            url="pattern-qr_ra-4.patt">
+            <a-entity id="global" scale=".6 .6 .6">
+                <a-entity id="logoFoco" position="0 0 -1">
+                    <a-plane id="foco" position="5 0 0" rotation="-90 0 0" width="1" height="1.4"
+                        material="src:images/tecnm.png" opacity=".9">
+                        <a-animation attribute="rotation" begin="focoIn" dur="1000" to="-90 0 360" easing="linear"
+                            repeat="2">
+                        </a-animation>
+                        <a-animation attribute="position" begin="focoIn" dur="3000" to="1 0 0" easing="linear">
+                        </a-animation>
+                        <a-animation attribute="rotation" begin="focoOut" dur="1000" to="-90 0 -45" easing="linear">
+                        </a-animation>
+                        <a-animation attribute="position" begin="focoOut" from="1 0 0" dur="2000" to="5 0 0"
+                            easing="linear">
+                        </a-animation>
+                    </a-plane>
+                    <a-plane id="ene" position="-5 0 0" rotation="-90 0 0" width="2" height="1"
+                        material="src:images/ene.png" opacity=".9">
+                        <a-animation attribute="position" begin="eneIn" dur="1000" to="-1 0 0" easing="linear">
+                        </a-animation>
+                        <a-animation attribute="rotation" begin="eneOut" dur="1000" to="-90 0 45" easing="linear">
+                        </a-animation>
+                        <a-animation attribute="position" begin="eneOut" from="-1 0 0" dur="2000" to="-5 0 0"
+                            easing="linear">
+                        </a-animation>
+                    </a-plane>
+                </a-entity>
+
+                <!--Integrantes-->
+                <a-plane id="integrantes" position="-10 1 -1" rotation="-50 0 0" width="1" height=".15"
+                    material="src:images/integrantes.png" opacity=".9">
+                    <a-animation attribute="position" begin="inteIn" dur="2000" to="0 1 -1"></a-animation>
+                    <a-animation attribute="position" begin="inteOut" from="0 1 -1" dur="2000" to="7 1 -1">
+                    </a-animation>
+                </a-plane>
+
+                <a-plane id="fotoInte" position="-1 0 -1" rotation="-50 0 0" width="1" height="1"
+                    material="src:images/amf.png" opacity="0">
+                    <a-animation attribute="opacity" begin="fotoIn" dur="1500" to=".8"></a-animation>
+                    <a-animation attribute="opacity" begin="fotoOut" from="1 1 0" dur="1500" to="0"></a-animation>
+                </a-plane>
+
+                <a-plane id="description" position="1 0 -1" rotation="-50 0 0" width="2" height="1"
+                    material="src:images/am.png" opacity="0">
+                    <a-animation attribute="opacity" begin="descIn" dur="1500" to=".8"></a-animation>
+                    <a-animation attribute="opacity" begin="descOut" from="1 1 0" dur="1500" to="0"></a-animation>
+                </a-plane>
+                <!--Logo Mabs-->
+                <a-plane id="logoMabs" position="-10 0 -1" rotation="-50 0 0" width="1" height="1"
+                    material="src:images/logo.png" opacity=".9">
+                    <a-animation attribute="position" begin="logoIn" dur="1000" to="-1 0 -1"></a-animation>
+                </a-plane>
+                <a-plane id="letrasMabs" position="17 0 -1" rotation="-50 0 0" width="2" height=".5"
+                    material="src:images/mabs1.png" opacity=".9">
+                    <a-animation attribute="position" begin="letrasMIn" dur="1000" to=".7 0 -1"></a-animation>
+                </a-plane>
+
+                <a-entity id="id1" position="0 0 .3">
+                    <a-plane id="v1" position="0 0 0" width="3" height=".75" rotation="-90 0 0"
+                        material="src: images/0.png" opacity=".9">
+
+                        <a-animation attribute="position" begin="derecha" dur="1000" to="6 0 0"></a-animation>
+                        <a-animation attribute="position" begin="centro" dur="1000" to="0 0 0"></a-animation>
+                        <a-animation attribute="position" begin="izquierda" dur="1000" to="-6 0 0"></a-animation>
+                        <a-animation attribute="position" begin="dc" from="6 0 0" dur="1000" to="0 0 0"></a-animation>
+                        <a-animation attribute="position" begin="ic" from="-6 0 0" dur="1000" to="0 0 0"></a-animation>
+                    </a-plane>
+
+
+                    <a-plane id="v2" position="6 0 0" width="3" height=".75" rotation="-90 0 0"
+                        material="src: images/0.png" opacity=".9">
+
+                        <a-animation attribute="position" begin="derecha" dur="1000" to="6 0 0"></a-animation>
+                        <a-animation attribute="position" begin="centro" dur="1000" to="0 0 0"></a-animation>
+                        <a-animation attribute="position" begin="izquierda" dur="1000" to="-6 0 0"></a-animation>
+                        <a-animation attribute="position" begin="dc" from="6 0 0" dur="1000" to="0 0 0"></a-animation>
+                        <a-animation attribute="position" begin="ic" from="-6 .5 0" dur="1000" to="0 0 0"></a-animation>
+
+                    </a-plane>
+
+                </a-entity>
+            </a-entity>
+
+
+
+        </a-marker>
+        <a-plane id="powered" position="-.001 -.03 -.1" width=".02" height=".006" opacity=".3"
+            material="src: images/powvector.png"></a-plane>
+        <a-plane id="swipe" position="-.015 -.01 -.1" width=".005" height=".005" opacity="0"
+            material="src: images/swipe.png">
+            <a-animation attribute="position" dur="1500" to=".015 -.01 -.1" repeat="indefinite"></a-animation>
+            <a-animation attribute="opacity" begin="planein" dur="1000" to=".9"></a-animation>
+            <a-animation attribute="opacity" begin="planeout" dur="1000" to="0"></a-animation>
+        </a-plane>
+        <!-- <a-plane id="plano" position="0 0 -.12" width="40" height="40" opacity="0"></a-plane> -->
+        <a-plane id="plane" position="0 0 -.098" width="2" height="2" material="color:black;" opacity=".4">
+            <a-animation attribute="opacity" begin="planeout" dur="1000" to="0"></a-animation>
+        </a-plane>
+        <a-plane id="qr" position="0 0 -.097" width=".02" height=".02" material="src:images/enfoca.png;" opacity=".9">
+            <a-animation attribute="opacity" begin="qrout" dur="1000" to="0"></a-animation>
+        </a-plane>
+        <a-entity camera></a-entity>
+    </a-scene>
+</body>
+
+<script>
+
+    document.getElementById("plane").addEventListener("click", function (e) {
+        console.log("clickPlano");
+        if (direccion == 5) {
+            switch (cuenta) {
+                case 0: {
+                    window.open("https://api.whatsapp.com/send?phone=+5216643164000&text=Hola!%20somos%20Mabs,%20en%20que%20podemos%20ayudarte?");
+                } break;
+                case 1: {
+                    window.open("tel:6643164000");
+                } break;
+                case 2: {
+                    window.open("fb://page/2052860884805288");
+                } break;
+                case 3: {
+                    window.open("https://www.mabs.mx/");
+                } break;
+                case 4: {
+                    window.open("mailto:mabsmx.info@gmail.com");
+                } break;
+            }
+
+        }
+
+    });
+
+    document.getElementById("v1").addEventListener("click", function (e) {
+        console.log("clickPlano");
+        if (direccion == 5) {
+            switch (cuenta) {
+                case 0: {
+                    window.open("https://api.whatsapp.com/send?phone=+5216643164000&text=Hola!%20somos%20Mabs,%20en%20que%20podemos%20ayudarte?");
+                } break;
+                case 1: {
+                    window.open("tel:6643164000");
+                } break;
+                case 2: {
+                    window.open("fb://page/2052860884805288");
+                } break;
+                case 3: {
+                    window.open("https://www.mabs.mx/");
+                } break;
+                case 4: {
+                    window.open("mailto:mabsmx.info@gmail.com");
+                } break;
+            }
+
+        }
+
+    });
+
+    document.getElementById("v2").addEventListener("click", function (e) {
+        console.log("clickPlano");
+        if (direccion == 5) {
+            switch (cuenta) {
+                case 0: {
+                    window.open("https://api.whatsapp.com/send?phone=+5216643164000&text=Hola!%20somos%20Mabs,%20en%20que%20podemos%20ayudarte?");
+                } break;
+                case 1: {
+                    window.open("tel:6643164000");
+                } break;
+                case 2: {
+                    window.open("fb://page/2052860884805288");
+                } break;
+                case 3: {
+                    window.open("https://www.mabs.mx/");
+                } break;
+                case 4: {
+                    window.open("mailto:mabsmx.info@gmail.com");
+                } break;
+            }
+
+        }
+
+    });
+
+
+
+
+    var xIni;
+    var yIni;
+    var canvas = document.getElementById('cuerpo');
+    var cuenta = 0;
+    var direccion = 0;
+    //var v1 = document.getElementById("v1");
+    var status = 1;
+    //var v2 = document.getElementById("v2");
+    //var v3 = document.getElementById("v3");
+
+
+    canvas.addEventListener('touchstart', function (e) {
+
+        if (e.targetTouches.length == 1) {
+            direccion = 5;
+
+            var touch = e.targetTouches[0];
+
+            xIni = touch.pageX;
+            yIni = touch.pageY;
+
+            // alert("toquesito: " + direccion);
+            window.setTimeout(function (e) {
+
+
+                if (direccion == 0) {
+                    cuenta++;
+                } else if (direccion == 1) {
+                    cuenta--;
+                }
+
+
+                if (cuenta >= 5) {
+                    cuenta = 0;
+                } else if (cuenta <= -1) {
+                    cuenta = 4;
+                }
+                console.log("cuenta: " + cuenta);
+                switch (cuenta) {
+                    case 0:
+                        {
+                            if (status == 1) {
+                                document.getElementById("v2").setAttribute("material", { src: "images/0.png" });
+
+                            } else {
+                                document.getElementById("v1").setAttribute("material", { src: "images/0.png" });
+
+                            }
+
+
+
+                        } break;
+                    case 1:
+                        {
+                            if (status == 1) {
+                                document.getElementById("v2").setAttribute("material", { src: "images/1.png" });
+
+                            } else {
+                                document.getElementById("v1").setAttribute("material", { src: "images/1.png" });
+
+                            }
+
+
+                        } break;
+                    case 2:
+                        {
+                            if (status == 1) {
+                                document.getElementById("v2").setAttribute("material", { src: "images/2.png" });
+
+                            } else {
+                                document.getElementById("v1").setAttribute("material", { src: "images/2.png" });
+
+                            }
+
+
+                        } break;
+                    case 3:
+                        {
+                            if (status == 1) {
+                                document.getElementById("v2").setAttribute("material", { src: "images/3.png" });
+
+                            } else {
+                                document.getElementById("v1").setAttribute("material", { src: "images/3.png" });
+
+                            }
+
+
+                        } break;
+                    case 4:
+                        {
+                            if (status == 1) {
+                                document.getElementById("v2").setAttribute("material", { src: "images/4.png" });
+
+                            } else {
+                                document.getElementById("v1").setAttribute("material", { src: "images/4.png" });
+
+                            }
+
+
+                        } break;
+                }
+
+                if (direccion == 0) {
+
+                    if (status == 1) {
+
+
+                        document.getElementById("v2").emit("ic");
+                        document.getElementById("v1").emit("derecha");
+                        status = 2;
+
+                    } else {
+
+                        document.getElementById("v1").emit("ic");
+                        document.getElementById("v2").emit("derecha");
+                        status = 1;
+                    }
+
+
+
+                } else if (direccion == 1) {
+
+                    if (status == 1) {
+                        document.getElementById("v2").emit("dc");
+                        document.getElementById("v1").emit("izquierda");
+                        status = 2;
+                        console.log("status 1, izquierda");
+                    } else {
+                        document.getElementById("v1").emit("dc");
+                        document.getElementById("v2").emit("izquierda");
+                        status = 1;
+                        console.log("status 2, izquierda");
+                    }
+
+
+                }
+                console.log("status: " + status);
+            }, 50);
+
+
+
+        }
+    }, false);
+
+    canvas.addEventListener('touchmove', function (e) {
+        if (e.targetTouches.length == 1) {
+            var touch = e.targetTouches[0];
+            if ((touch.pageX > xIni + 20)) {
+                console.log("el swipe se genera hacia la derecha");
+                document.getElementById("swipe").emit("planeout");
+                direccion = 0;
+                //
+
+
+
+            } else if ((touch.pageX < xIni - 20)) {
+                console.log("el swipe se genera hacia la izquierda");
+                document.getElementById("swipe").emit("planeout");
+                direccion = 1;
+                //alert("izquierda");
+
+
+            }
+
+        }
+    }, false);
+
+
+</script>
+
+</html>

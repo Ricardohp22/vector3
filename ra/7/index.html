@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head id="head">
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-136675623-1"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+
+    gtag('config', 'UA-136675623-1');
+  </script>
+  <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+</head>
+<script src="https://aframe.io/releases/1.0.0/aframe.min.js"></script>
+<script src="scripts/gif.js"> </script>
+<script src="https://rawgit.com/jeromeetienne/AR.js/master/aframe/build/aframe-ar.min.js"></script>
+<script src="https://rawgit.com/donmccurdy/aframe-extras/master/dist/aframe-extras.loaders.min.js"></script>
+<!-- <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script> -->
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"
+  integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+<script id="arjs"></script>
+<title>La Reyna</title>
+<link href="https://fonts.googleapis.com/css?family=Anton&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+  integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+<link rel="stylesheet" href="css/stylera.css">
+<script>
+  var isTargetFound = false;
+  var interacted = false;
+  var cuenta2 = 0;
+  AFRAME.registerComponent("markerhandler", {
+    init: function () {
+
+      markerObj = document.querySelector('a-marker');
+      markerObj.hidden = true;
+
+    },
+
+    tick: function () {
+
+      if (markerObj != null) {
+        if (markerObj.object3D.visible == true) {
+
+          if (isTargetFound)
+            return;
+
+          isTargetFound = true;
+
+          cuenta2++;
+          if (cuenta2 == 1) {
+            document.getElementById("plane").emit("planeout");
+            document.getElementById("qr").emit("qrout");
+
+            document.getElementById("plane").emit("planeout2");
+            document.getElementById("qr").emit("qrout2");
+
+            document.getElementById("logo").emit("inLogo");
+            document.getElementById("planeLogo").emit("subelogo");
+
+          }
+
+        }
+        else {
+
+          if (!isTargetFound)
+            return;
+
+          isTargetFound = false;
+
+        }
+      }
+    }
+  });
+</script>
+
+<body style='margin : 0px; overflow: hidden;' id="cuerpo" onload="imgLoaded()">
+  <div id="instrucciones">
+
+    <div class="container contInst">
+      <img src="images/logo2.png" alt="">
+
+      <p id="bienvenida">
+        Bienvenidos a <span class="anton azul" style="font-weight: 100;">L a &nbsp; R e y n a</span>, conoce mas
+        sobre nuestro excelente crema de agave con <strong style="color: #860404">Realidad Aumentada</strong> !
+      </p>
+
+      <button onclick="verani()">Ver Animación!</button>
+
+      <h6 class="azul anton">Importante!</h6>
+      <ol id="listaInst">
+        <li>Haz click en Ver Animacion</li>
+        <li>Permite el acceso a tu camara</li>
+        <li>Ubica la etiqueta de la botella</li>
+        <li>Sube el volumen de tu celular y presiona las cajas en Realidad Aumentada</li>
+        <li>Diviertete y observa la Realidad Aumentada!!</li>
+      </ol>
+
+      <p id="nota">
+        Nota: Recuerda que debes permitir el acceso a tu camara para ver animaciones en Realidad Aumentada
+      </p>
+
+    </div>
+
+  </div>
+  <a-scene vr-mode-ui="enabled: false" embedded arjs="sourceType: webcam; debugUIEnabled: false; patternRatio: 0.8;">
+    <a-assets>
+      <img id="reyna" src="images/reyna4-320.gif">
+    </a-assets>
+
+    <a-marker markerhandler emitevents="true" cursor="fuse: false; rayOrigin: mouse" type="pattern"
+      url="pattern-targetReyna.patt">
+      <a-entity rotation="90 0 0">
+
+        <a-plane id="gif" rotation="-90 0 0" opacity="0" width="2" height="2" material="shader: gif;" gif=""
+          src="#reyna" position="0 0 0" animation="startEvents: gifin; property: opacity; dur: 1000; to: .9;"></a-plane>
+
+        <a-entity id="logo" scale=".001 .001 .001"
+          animation=" startEvents: inLogo; property: rotation; dur: 1000; from: 0 0 0; to: 0 360 0; loop: 5; easing: linear;"
+          animation__2=" startEvents: inLogo; property: scale; dur: 5000; from: .001 .001 .001; to: 1 1 1; easing: linear;">
+          <a-plane id="planeLogo" position="0 0.1 -.5" rotation="-90 0 0" opacity=".9" width="1.5" height=".5"
+            material="src: images/logo.png"
+            animation="startEvents: subelogo; property: position; dur: 4000; to: 0 0.1 -1.3;"></a-plane>
+        </a-entity>
+        <a-plane id="fondo" position="0 .1 0" rotation="-90 0 0" material="src: images/fondo.png" opacity=".99"
+          animation="property: rotation; dur: 2000; to: -90 360 0; easing: linear; loop: true;"
+          animation__2="startEvents:fondoout; property: scale; dur: 1500; to: .0001 .0001 .0001; easing: linear;">
+        </a-plane>
+
+        <a-box id="espanol" position="-1 .5 1" scale=".0001 .0001 .0001" material="src: images/cuboEs.png;"
+          animation="property: rotation; dur: 10000; to: 0 360 360; loop: true; easing: linear;"
+          animation__2=" startEvents: btnAudio; property: scale; from: .0001 .0001 .0001; dur: 1500; to: .5 .5 .5;"
+          animation__3=" startEvents: btnAudioout; property: scale; dur: 1500; from: .5 .5 .5; to: .0001 .0001 .0001;">
+        </a-box>
+        <a-box id="ingles" position="1 .5 1" scale=".0001 .0001 .0001" material="src: images/cuboEn.png;"
+          animation="property: rotation; dur: 8000; to: 0 360 360; loop: true; easing: linear;"
+          animation__2=" startEvents: btnAudio; property: scale; dur: 1500; to: .5 .5 .5;"
+          animation__3=" startEvents: btnAudioout; property: scale; dur: 1500; from: .5 .5 .5; to: .0001 .0001 .0001;">
+        </a-box>
+        <a-plane id="espanol1" position="-25 .5 1" width="50" height="1" rotation="-90 0 0" opacity="0"></a-plane>
+        <a-plane id="ingles1" position="25 .5 1" width="50" height="1" rotation="-90 0 0" opacity="0"></a-plane>
+
+      </a-entity>
+
+    </a-marker>
+
+
+    <a-plane id="plane" position="0 0 -.098" width="2" height="2" material="color:black;" opacity=".4"
+      animation="startEvents: planeout; property: opacity; dur: 1000; to: 0;"
+      animation__2="startEvents: planeout2; property: scale; dur: 3000; to: .0001 .0001 .0001;">
+
+    </a-plane>
+    <a-plane id="qr" position="0 0 -.097" width=".02" height=".02" material="src:images/enfoca.png;" opacity=".9"
+      animation="startEvents: qrout; property: opacity; dur: 1000; to: 0;"
+      animation__2="startEvents: qrout2; property: scale; dur: 3000; to: .0001 .0001 .0001;">
+
+
+    </a-plane>
+    <a-entity camera></a-entity>
+  </a-scene>
+</body>
+
+<script>
+
+  window.onload = function () {
+    let status = 0;
+    let gifG;
+    var intervalID;
+    var aud1 = new Audio();
+    aud1.src = "audio/espanol.mp3";
+    var aud2 = new Audio();
+    aud2.src = "audio/ingles.mp3";
+
+
+
+
+
+    document.getElementById('espanol').addEventListener('click', function () {
+      aud1.play();
+      audFondo.volume = .1;
+      document.getElementById('espanol').emit('btnAudioout');
+      document.getElementById('ingles').emit('btnAudioout');
+    })
+    document.getElementById('ingles').addEventListener('click', function () {
+      aud2.play();
+      audFondo.volume = .1;
+      document.getElementById('espanol').emit('btnAudioout');
+      document.getElementById('ingles').emit('btnAudioout');
+    })
+    document.getElementById('espanol1').addEventListener('click', function () {
+      aud1.play();
+      audFondo.volume = .1;
+      document.getElementById('espanol').emit('btnAudioout');
+      document.getElementById('ingles').emit('btnAudioout');
+    })
+    document.getElementById('ingles1').addEventListener('click', function () {
+      aud2.play();
+      audFondo.volume = .1;
+      document.getElementById('espanol').emit('btnAudioout');
+      document.getElementById('ingles').emit('btnAudioout');
+    })
+
+    gifG = document.getElementById('gif');
+    gifG.pause();
+
+
+
+
+    var idx = 0;
+    var direccion = true;
+    var loop = 0;
+    function miFuncion() {
+
+      gifG.components.material.shader.nextFrame(idx);
+      idx++;
+
+      if (idx > 60) {
+        idx = 0;
+      }
+    }
+
+    document.getElementById('logo').addEventListener('animationcomplete__2', function () {
+      document.getElementById('fondo').emit('fondoout');
+
+      window.setTimeout(function () {
+        gifG.components.material.shader.nextFrame(0);
+        gif.play();
+        document.getElementById('gif').emit('gifin');
+      }, 3000);
+      window.setTimeout(function () {
+        intervalID = window.setInterval(miFuncion, 150);
+        document.getElementById('espanol').emit('btnAudio');
+        document.getElementById('ingles').emit('btnAudio');
+      }, 3500);
+
+    });
+
+
+    aud1.addEventListener('ended', function () {
+      document.getElementById('espanol').emit('btnAudio');
+      document.getElementById('ingles').emit('btnAudio');
+      audFondo.volume = .4;
+    });
+    aud2.addEventListener('ended', function () {
+      document.getElementById('espanol').emit('btnAudio');
+      document.getElementById('ingles').emit('btnAudio');
+      audFondo.volume = .4;
+    });
+    /* var iniciador = 1;
+    audFondo.addEventListener('canplay', function(){
+      if(iniciador){
+        window.setTimeout(function(){
+          audFondo.play();
+        },5000);
+      }
+      
+    }) */
+    /* window.setInterval(function(){
+          audFondo.play();
+          console.log('playing');
+        },3000); */
+
+
+  }
+  var audFondo = new Audio();
+  audFondo.src = "audio/tambores2.mp3";
+  audFondo.loop = true;
+  audFondo.volume = .4;
+  function verani() {
+    audFondo.play();
+    console.log('playing');
+    document.getElementById('instrucciones').style.display = 'none';
+
+  }
+</script>
+
+</html>

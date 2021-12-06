@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-136675623-1"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+
+        gtag('config', 'UA-136675623-1');
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>DentalVR</title>
+    <!-- <script src="scripts/aframe.js"></script> -->
+    <!-- <script src="https://aframe.io/releases/0.8.0/aframe.min.js"></script> -->
+    <script src="scripts/aframe.js"></script>
+    <script src="scripts/gif.js"> </script>
+    <link href="https://fonts.googleapis.com/css?family=Anton&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+    <div class="cont-video">
+        <video id="video" autoplay></video>
+    </div>
+    <!-- <div id="puntuacionBan">
+        <div class="contenido2">
+            <ul class="inline">
+                <li>Balas:</li>
+                <li id="balasBan">0</li>
+                <li id="tiempoBan">60</li>
+                <li>Puntos:</li>
+                <li id="puntosBan">0</li>
+            </ul>
+        </div>
+    </div> -->
+    <div id="puntuacionBan">
+
+        <ul class="inline">
+            <li><strong>Balas:</strong></li>
+            <li ><strong id="balasBan">0</strong></li>
+            <li id="tiempoBan"> 60</li>
+            <li><strong>Puntos:</strong> </li>
+            <li ><strong id="puntosBan">0</strong></li>
+        </ul>
+<div id="lineaTiempo"></div>
+    </div>
+    
+    <div id="ventana">
+        <!-- <div class="container cont">
+            <div class="row items"><h3>Titulo</h3></div>
+            <div class="row items"><p>Descripcion de la ventana</p></div>
+            <div class="row items" onClick="accion()"><button>Accion</button></div>    
+        </div> -->
+    </div>
+    <div id="instrucciones">
+        <div id="videoDemo">
+            <div id="salirVideo">
+                <img src="images/equis.png" alt="">
+            </div>
+            <video id="vid" src="video/demoDentalEdit.mp4" controls></video>
+        </div>
+        
+        <div class="container contInst">
+            <img src="images/logopp.png" alt="">
+            <div class="anton contRecord"><span class="azul">Record Actual:</span><span id="recordInst">No</span></div>
+            
+            <p id="bienvenida" >
+                Bienvenido a <span class="anton azul" style="font-weight: 100">Healthy Mouth Game</span>, el juego de Realidad Aumentada que pondra a prueba tu punteria!!
+            </p>
+            <button onClick="startGame()">Jugar</button>
+            <button onClick="verDemo()">Ver demo</button>
+            <h6 class="azul anton">Dinamica del Juego</h6>
+            <ol id="listaInst">
+                <li>Busca con tu camara a tu alrededor las muelas con caries</li>
+                <li>Apunta con la mirilla y dispara tocando la pantalla</li>
+                <li>Entre mas muelas con caries elimines mas puntos conseguiras</li>
+                <li>Evita disparar a los objetos que ayudan a cuidar tu boca</li>
+                <li>Diviertete y trata de superar el record actual!!</li>
+            </ol>
+            
+            <p id="nota">
+                Nota: Recuerda que debes permitir el acceso a tu camara para jugar juegos de Realidad Aumentada
+            </p>
+            
+        </div>
+
+    </div>
+    <div id="formulario">
+        <div id="for" class="container">
+            <h6>Ingresa tus datos para contactarte</h6>
+            <form action="">
+                <div class="form-group">
+                    <!-- <label for="nombre">NickName:</label> -->
+                    <input onkeypress="validar(event,0)" id="nickId" class="form-control" type="text"
+                        placeholder="nickName" maxlength="12">
+                </div>
+                <div class="form-group">
+                    <!-- <label for="nombre">Nombre:</label> -->
+                    <input onkeypress="validar(event,1)" id="nombreId" class="form-control" type="text"
+                        placeholder="nombre" maxlength="60">
+                </div>
+                <div class="form-group">
+                    <!-- <label for="nombre">Telefono:</label> -->
+                    <input onkeypress="validar(event,2)" id="telId" class="form-control" type="text"
+                        placeholder="telefono" maxlength="20">
+                </div>
+                <div class="form-group">
+                    <!-- <label for="nombre">Mail:</label> -->
+                    <input onkeypress="validar(event,3)" id="mailId" class="form-control" type="text" placeholder="mail"
+                        maxlength="60">
+                </div>
+
+            </form>
+            <button class="btn btn-primary" onClick="sendData()">Enviar</button>
+        </div>
+    </div>
+    <footer>
+        <img src="images/powvector.png" alt="">
+    </footer>
+    <a-scene id="escena" vr-mode-ui="enabled: false">
+        <a-assets>
+            <img id="diente" src="images/diente.gif">
+            <img id="clock" src="images/clock.gif">
+            <img id="carie" src="images/carie.png">
+            <img id="cep" src="images/cepillo.png">
+            <img id="pasta" src="images/pasta.png">
+        </a-assets>
+        <a-entity id="global" rotation="0 180 0">
+            <a-entity id="cubos" scale=".0001 .0001 .0001">
+                <!-- <a-entity id="0">
+               <a-entity rotation="0 0 0" animation="property: rotation; from: 0 0 0 to: 360 360 0; dur: 20000; easing: linear; loop: true;">
+                    <a-box id="cubo0" class="cubo" scale=".5 .5 .5" position="0 0 -2" material="src: images/vm.jpg"
+                        animation="property: rotation; to: 0 360 360; dur: 10000; easing: linear; loop: true;"
+                        animation__out="startEvents: out; property: scale; to: .001 .001 .001; dur: 500;">
+                    </a-box>
+                </a-entity> 
+            </a-entity> -->
+
+            </a-entity>
+            <!-- <a-entity id="${i}" rotation="${posIniX} ${posIniY} 0">
+            <a-entity rotation="0 0 0"
+                animation="property: rotation; from: 0 0 0; to: 360 360 0; dur: ${velocidad}; easing: linear; loop: true;">
+                <a-box id="${prefix}cubo${i}" class="cubo" scale=".5 .5 .5" position="0 0 -${distancia}"
+                    material="src: ${img}"
+                    animation="property: rotation; to: 0 360 360; dur: 10000; easing: linear; loop: true;"
+                    animation__out="startEvents: out; property: scale; to: .001 .001 .001; dur: 500;">
+                </a-box>
+            </a-entity>
+        </a-entity> -->
+
+            <!-- <a-entity id="0" rotation="0 0 0">
+            <a-entity rotation="0 0 0"
+                animation="property: rotation; from: 0 0 0; to: 360 360 0; dur: 20000; easing: linear; loop: true;">
+                <a-gltf-model src="modelos/pasta/scene.gltf" id="cubo0" class="cubo" scale="1 1 1" position="0 0 -2"
+                    animation="property: rotation; to: 0 360 360; dur: 10000; easing: linear; loop: true;"
+                    animation__out="startEvents: out; property: scale; to: .001 .001 .001; dur: 500;">
+                </a-gltf-model>
+            </a-entity>
+        </a-entity> -->
+
+            <a-entity id="escenaInicial">
+                <a-entity id="logo" position="0 0 -1.5" scale="1 1 1" rotation="0 0 0">
+                    <a-sphere position="0 1 0" radius=".125" material="color: yellow;"></a-sphere>
+                    <a-entity animation="property: rotation; dur: 3000; to: 0 360 0; loop: true; easing: linear;">
+                        <a-ring position="0 1 0" radius-inner=".15" radius-outer=".2" rotation="-80 0 0"
+                            material="color: red;" opacity=".5"></a-ring>
+                        <a-ring position="0 1 0" radius-inner=".2" radius-outer=".25" rotation="-80 0 0"
+                            material="color: yellow;" opacity=".5"></a-ring>
+
+                        <a-ring position="0 .99 0" radius-inner=".15" radius-outer=".2" rotation="100 0 0"
+                            material="color: red;" opacity=".5"></a-ring>
+                        <a-ring position="0 .99 0" radius-inner=".2" radius-outer=".25" rotation="100 0 0"
+                            material="color: yellow;" opacity=".5"></a-ring>
+                        <!-- <a-animation attribute="rotation" dur="3000" to="0 360 0" repeat="indefinite" easing="linear">
+                        </a-animation> -->
+                    </a-entity>
+                    <a-entity animation="startEvents: giraLogo property: rotation; dur: 1000; to: 0 360 0; loop: true;">
+                        <a-plane position="0 .7 0" rotation="0 0 0" width="1.18" height=".18"
+                            material="src:images/logopp.png" opacity=".7"></a-plane>
+                        <a-plane position="0 .7 -.1" rotation="0 180 0" width="1.18" height=".18"
+                            material="src:images/logopp.png" opacity=".7"></a-plane>
+                        <!-- <a-animation attribute="rotation" begin="7000" dur="1000" to="0 360 0" repeat="indefinite">
+                        </a-animation> -->
+                    </a-entity>
+
+                </a-entity>
+
+                <a-plane id="continuar" class="initialScreen" position="0 -.5 -1" width=".4" height=".2" opacity=".9"
+                    material="src: images/continuar.png"
+                    animation="startEvents: out; property: scale; to: .001 .001 .001; dur: 500;"></a-plane>
+
+
+                <a-plane id="inst" class="initialScreen" position="0 0 -1" rotation="0 .1 0" width="1.1" height=".5"
+                    opacity=".8" material="src: images/inst1.png"
+                    animation="startEvents: out; property: scale; to: .001 .001 .001; dur: 500;">
+                </a-plane>
+            </a-entity>
+
+            <a-entity position="0 -.5 0">
+                <a-entity id="timeId" class="dashboard" text="value: 60;" position="4.7 .85 -2"
+                    scale=".00001 .00001 .00001" rotation="0 0 0" opacity=".9"
+                    animation="startEvents: in; property: scale; to: 10 10 10; dur: 1000">
+                    <!-- <a-animation attribute="scale" begin="marcadorIn" dur="1000" to="10 10 10" easing="linear">
+                </a-animation> -->
+                </a-entity>
+                <a-entity id="puntosId" class="dashboard" text="value: Puntaje: 0;" position=".4 .3 -.5"
+                    scale=".0001 .0001 .0001" rotation="0 0 0" opacity=".9"
+                    animation="startEvents: in; property: scale; to: 1 1 1; dur: 1000">
+                    <!-- <a-animation attribute="scale" begin="marcadorIn" dur="1000" to="1 1 1" easing="linear">
+                </a-animation> -->
+                </a-entity>
+
+                <a-entity id="recordId" class="dashboard" text="value: Record: Ricardo     Puntaje: 250;"
+                    position=".1 .31 -1" scale=".00008 .00008 .00008" rotation="0 0 0"
+                    animation="startEvents: in; property: scale; to: .8 .8 .8; dur: 1000">
+                    <!-- <a-animation attribute="scale" begin="marcadorIn" dur="1000" to=".8 .8 .8" easing="linear">
+                </a-animation> -->
+                </a-entity>
+                <a-plane id="record" class="dashboard" position="0 .3 -1.1" height=".2" width=".7"
+                    material="src:images/record.png" opacity="0"
+                    animation="startEvents: in; property: opacity; to: .8; dur: 1000">
+                    <!-- <a-animation attribute="opacity" begin="marcadorIn" dur="1000" to=".8" easing="linear">
+                </a-animation> -->
+                </a-plane>
+
+
+                <a-plane id="puntuacion" class="dashboard" position="0 0 -1.1" width=".8" height=".44" opacity="0"
+                    material="src: images/puntuacion.png"
+                    animation="startEvents: in; property: opacity; to: .5; dur: 1000">
+                    <!-- <a-animation attribute="opacity" begin="marcadorIn" dur="1000" to=".5" easing="linear">
+                </a-animation> -->
+                </a-plane>
+            </a-entity>
+        </a-entity>
+
+
+
+
+        <a-entity camera look-controls="hmdEnabled: false; reverseTouchDrag: true;">
+            <a-plane position="0 0 -.1" width=".01" height=".01" opacity=".5" material="src: images/mirilla.png">
+            </a-plane>
+            <a-entity >
+                <a-plane id="dedo" position="-.012 -.045 -.099" width=".00017" height=".0002" opacity=".9" material="src: images/dedo.png"
+                animation="property: position; to: .02 -.045 -.099; dur: 2000; dir: alternate; easing:linear; loop: true;"
+                animation__2="startEvents: out; property: scale; to: .001 .001 .001; dur: 1000; easing: linear;">
+                </a-plane>
+            </a-entity>
+            <!-- <a-plane position="0 0 -.091" width=".02" height=".02" opacity=".9" material="shader: gif" src= "#diente">
+            </a-plane> -->
+            <a-plane id="crashId" position="0 0 -.049" width=".001" height=".001" opacity="0" material="color:yellow;"
+                animation="startEvents: anCrash; property: opacity; from: 1; to: 0; dur: 100;">
+                <!-- <a-animation attribute="opacity" begin="anCrash" dur="100" from="1" to="0"></a-animation> -->
+            </a-plane>
+
+            <a-entity cursor position="0 0 -.5" geometry="primitive: ring; radiusInner: 0.002; radiusOuter: 0.003;"
+                material="color: red; shader: flat">
+            </a-entity>
+            <a-gltf-model src="modelos/gun/scene.gltf" position=".1 -.1 -1" rotation="-5 190 0" scale=".1 .1 .1"
+                animation="property: rotation; dur:1000; to: -3.5 190 0; loop: true; easing: linear; dir: alternate;">
+            </a-gltf-model>
+
+        </a-entity>
+
+    </a-scene>
+
+
+    </a-entity>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+    <script src="https://www.gstatic.com/firebasejs/6.2.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/3.1.0/firebase-database.js"></script>
+    <script src="scripts/camara.js"></script>
+    <script src="scripts/logic.js"></script>
+</body>
+
+</html>

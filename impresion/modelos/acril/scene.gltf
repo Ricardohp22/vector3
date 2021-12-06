@@ -1,0 +1,314 @@
+{
+  "accessors": [
+    {
+      "bufferView": 1,
+      "componentType": 5126,
+      "count": 5682,
+      "max": [
+        2032,
+        1270,
+        60
+      ],
+      "min": [
+        0,
+        0,
+        0
+      ],
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 1,
+      "byteOffset": 68184,
+      "componentType": 5126,
+      "count": 5682,
+      "max": [
+        1,
+        1,
+        1
+      ],
+      "min": [
+        -1,
+        -1,
+        -1
+      ],
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 1,
+      "byteOffset": 136368,
+      "componentType": 5126,
+      "count": 5682,
+      "max": [
+        1,
+        1,
+        1
+      ],
+      "min": [
+        1,
+        1,
+        1
+      ],
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 0,
+      "componentType": 5125,
+      "count": 12876,
+      "max": [
+        5681
+      ],
+      "min": [
+        0
+      ],
+      "type": "SCALAR"
+    }
+  ],
+  "asset": {
+    "extras": {
+      "author": "ricardo22 (https://sketchfab.com/ricardo22)",
+      "license": "CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)",
+      "source": "https://sketchfab.com/models/75428138884b44819ca05162fd7e826c",
+      "title": "Vidrio2"
+    },
+    "generator": "Sketchfab-4.32.0",
+    "version": "2.0"
+  },
+  "bufferViews": [
+    {
+      "buffer": 0,
+      "byteLength": 51504,
+      "byteOffset": 0,
+      "name": "floatBufferViews",
+      "target": 34963
+    },
+    {
+      "buffer": 0,
+      "byteLength": 204552,
+      "byteOffset": 51504,
+      "byteStride": 12,
+      "name": "floatBufferViews",
+      "target": 34962
+    }
+  ],
+  "buffers": [
+    {
+      "byteLength": 256056,
+      "uri": "scene.bin"
+    }
+  ],
+  "materials": [
+    {
+      "alphaMode": "BLEND",
+      "doubleSided": true,
+      "emissiveFactor": [
+        0,
+        0,
+        0
+      ],
+      "name": "Material_002",
+      "pbrMetallicRoughness": {
+        "baseColorFactor": [
+          0.37345099999999998,
+          0.45037100000000002,
+          0.44523000000000001,
+          0.47605599999999998
+        ],
+        "metallicFactor": 0,
+        "roughnessFactor": 0.69463271830000006
+      }
+    }
+  ],
+  "meshes": [
+    {
+      "name": "Material_002-material",
+      "primitives": [
+        {
+          "attributes": {
+            "COLOR_0": 2,
+            "NORMAL": 1,
+            "POSITION": 0
+          },
+          "indices": 3,
+          "material": 0,
+          "mode": 4
+        }
+      ]
+    }
+  ],
+  "nodes": [
+    {
+      "children": [
+        1
+      ],
+      "name": "RootNode (gltf orientation matrix)",
+      "rotation": [
+        -0.70710678118654746,
+        -0,
+        -0,
+        0.70710678118654757
+      ]
+    },
+    {
+      "children": [
+        2
+      ],
+      "name": "RootNode (model correction matrix)"
+    },
+    {
+      "children": [
+        3,
+        5,
+        7,
+        9,
+        11
+      ],
+      "name": "Collada visual scene group"
+    },
+    {
+      "children": [
+        4
+      ],
+      "matrix": [
+        0.1024379,
+        0.1086739,
+        -1.38969e-08,
+        0,
+        -0.048389330000000001,
+        0.045612649999999998,
+        0.1337216,
+        0,
+        0.097306080000000003,
+        -0.091722399999999996,
+        0.066498429999999997,
+        0,
+        1.148539,
+        -1.403702,
+        2.3060299999999998,
+        1
+      ],
+      "name": "Camera_001"
+    },
+    {
+      "name": "Camera_001-camera"
+    },
+    {
+      "children": [
+        6
+      ],
+      "matrix": [
+        -0.043438810000000001,
+        0.14264869999999999,
+        -0.0082421219999999993,
+        0,
+        -0.115159,
+        -0.029851349999999999,
+        0.090281940000000005,
+        0,
+        0.084587220000000005,
+        0.03261534,
+        0.1186792,
+        0,
+        0.64004059999999996,
+        -0.28166920000000001,
+        2.3896920000000001,
+        1
+      ],
+      "name": "Lamp_001"
+    },
+    {
+      "name": "Lamp.002"
+    },
+    {
+      "children": [
+        8
+      ],
+      "matrix": [
+        -0.0038566429999999999,
+        0,
+        0,
+        0,
+        0,
+        -0.0038566429999999999,
+        6.2832700000000002e-10,
+        0,
+        0,
+        -6.2832700000000002e-10,
+        -0.0038566429999999999,
+        0,
+        2.95885,
+        0.99090800000000001,
+        1.564146,
+        1
+      ],
+      "name": "corte"
+    },
+    {
+      "mesh": 0,
+      "name": "Material_002-material"
+    },
+    {
+      "children": [
+        10
+      ],
+      "matrix": [
+        -0.29086459999999997,
+        0.9551712,
+        -0.055189059999999998,
+        0,
+        -0.77110080000000003,
+        -0.19988339999999999,
+        0.60452470000000003,
+        0,
+        0.56639320000000004,
+        0.21839120000000001,
+        0.7946723,
+        0,
+        4.0762450000000001,
+        1.0054540000000001,
+        5.9038620000000002,
+        1
+      ],
+      "name": "Lamp"
+    },
+    {
+      "name": "Lamp"
+    },
+    {
+      "children": [
+        12
+      ],
+      "matrix": [
+        0.68592070000000005,
+        0.72767630000000005,
+        0,
+        0,
+        -0.32401350000000001,
+        0.30542079999999999,
+        0.89539559999999996,
+        0,
+        0.65155819999999998,
+        -0.61417040000000001,
+        0.44527139999999998,
+        0,
+        7.4811319999999997,
+        -6.2678700000000003,
+        5.3436649999999997,
+        1
+      ],
+      "name": "Camera"
+    },
+    {
+      "name": "Camera-camera"
+    }
+  ],
+  "scene": 0,
+  "scenes": [
+    {
+      "name": "OSG_Scene",
+      "nodes": [
+        0
+      ]
+    }
+  ]
+}
+

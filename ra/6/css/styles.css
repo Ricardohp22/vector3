@@ -1,0 +1,14 @@
+.contLogo{
+    display: flex;
+    justify-content: center;
+    height: 50px;
+    position: absolute;
+    margin: 20px;
+    bottom: 0px;
+    left: 0px;
+    right: 0px;
+}
+.contLogo img{
+    height: 40px;
+    opacity: .5;
+}

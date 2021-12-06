@@ -1,0 +1,470 @@
+<!doctype HTML>
+<html>
+
+<head>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-136675623-1"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+
+        gtag('config', 'UA-136675623-1');
+    </script>
+    <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+</head>
+<script src="https://aframe.io/releases/0.8.0/aframe.min.js"></script>
+<script src="https://rawgit.com/jeromeetienne/AR.js/master/aframe/build/aframe-ar.min.js"></script>
+<script src="https://rawgit.com/donmccurdy/aframe-extras/master/dist/aframe-extras.loaders.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script>
+    var isTargetFound = false;
+      var interacted = false;
+    var cuenta2 = 0;
+      AFRAME.registerComponent("markerhandler",{
+              init:function() {
+                  console.log('markerhandler-init');
+
+                 markerObj = document.querySelector('a-marker');
+                 markerObj.hidden = true;
+
+                 //dino.setAttribute('animation-mixer', {clip: 'C4D Animation Take', loop: 'repeat'});
+              },
+
+              tick:function() {
+
+                  if (markerObj != null)
+                      {
+                          if (markerObj.object3D.visible == true) {
+                              
+                            if (isTargetFound)
+                              return;
+
+                            isTargetFound = true;
+                            console.log ("marker visible");
+                            cuenta2++;
+                            if(cuenta2==1)
+                            {
+                              document.getElementById("qr").emit("qrout"); 
+                              document.getElementById("plane").emit("planeout");
+                              document.getElementById("swipe").emit("planein");
+                            }
+                            
+                            //document.getElementById("videoScene").emit("an1");
+                          }
+                          else {
+                              
+                            if (!isTargetFound)
+                              return;
+
+                            isTargetFound = false;
+                          console.log ("marker invisible");
+                          
+                          }
+                        }
+                }
+              });
+  </script>
+
+<body style='margin : 0px; overflow: hidden;' id="cuerpo">
+    <!-- we add detectionMode and matrixCodeType to tell AR.js to recognize barcode markers -->
+    <a-scene embedded arjs="sourceType: webcam; debugUIEnabled: false; patternRatio: 0.8;">
+            <a-assets>
+            </a-assets>
+            <!--<a-entity light="type: ambient; color: #FFF"></a-entity>
+            <a-entity id="luz1" light="type: directional; color: #FFF; intensity: .6" position="1 0 1"></a-entity>
+            <a-entity id="luz2" light="type: directional; color: #FFF; intensity: .6" position="-1 -.5 1"></a-entity>-->
+            
+        <a-marker markerhandler emitevents="true" cursor="fuse: false; rayOrigin: mouse" type="pattern" url="pattern-vinylico.patt">
+
+            <a-entity gltf-model="modelos/robotTwerk/scene.gltf" scale=".1 .1 .1" animation-mixer></a-entity>
+            <a-entity id="id1" position="0 0 .7" scale=".6 .6 .6">
+                    
+                    <a-plane id="v1" position="0 0 0" width="3" height=".75" rotation="-90 0 0" material="src: images/bwa.png" opacity=".9">
+                          
+                        <a-animation
+                        attribute="position"
+                        begin="derecha"
+                        dur="1000"
+                        to="6 0 0"
+                        ></a-animation>
+                        <a-animation
+                        attribute="position"
+                        begin="centro"
+                        dur="1000"
+                        to="0 0 0"
+                        ></a-animation>
+                        <a-animation
+                        attribute="position"
+                        begin="izquierda"
+                        dur="1000"
+                        to="-6 0 0"
+                        ></a-animation>
+                        <a-animation
+                        attribute="position"
+                        begin="dc"
+                        from="6 0 0"
+                        dur="1000"
+                        to="0 0 0"
+                        ></a-animation>
+                        <a-animation
+                        attribute="position"
+                        begin="ic"
+                        from="-6 0 0"
+                        dur="1000"
+                        to="0 0 0"
+                        ></a-animation>
+                    </a-plane>
+
+
+                    <a-plane id="v2" position="6 0 0" width="3" height=".75" rotation="-90 0 0" material="src: images/bwa.png" opacity=".9">
+                         
+                        <a-animation
+                        attribute="position"
+                        begin="derecha"
+                        dur="1000"
+                        to="6 0 0"
+                        ></a-animation>
+                        <a-animation
+                        attribute="position"
+                        begin="centro"
+                        dur="1000"
+                        to="0 0 0"
+                        ></a-animation>
+                        <a-animation
+                        attribute="position"
+                        begin="izquierda"
+                        dur="1000"
+                        to="-6 0 0"
+                        ></a-animation>
+                        <a-animation
+                        attribute="position"
+                        begin="dc"
+                        from="6 0 0"
+                        dur="1000"
+                        to="0 0 0"
+                        ></a-animation>
+                        <a-animation
+                        attribute="position"
+                        begin="ic"
+                        from="-6 .5 0"
+                        dur="1000"
+                        to="0 0 0"
+                        ></a-animation>
+                        
+                    </a-plane>
+                    
+            </a-entity>
+  
+            
+        </a-marker>
+        <a-plane id="powered" position="-.001 -.03 -.1" width=".02" height=".006" opacity=".3" material="src: images/powvector.png"></a-plane>
+        <a-plane id="swipe" position="-.015 -.01 -.1" width=".005" height=".005" opacity="0" material="src: images/swipe.png">
+            <a-animation
+            attribute="position"
+            dur="1500"
+            to=".015 -.01 -.1"
+            repeat="indefinite"
+            ></a-animation>
+            <a-animation
+                attribute="opacity"
+                begin="planein"
+                dur="1000"
+                to=".9"
+            ></a-animation>
+            <a-animation
+                attribute="opacity"
+                begin="planeout"
+                dur="1000"
+                to="0"
+            ></a-animation>
+        </a-plane>
+        <!-- <a-plane id="plano" position="0 0 -.12" width="40" height="40" opacity="0"></a-plane> -->
+        <a-plane id="plane" position="0 0 -.098" width="2" height="2" material="color:black;" opacity=".4">
+            <a-animation
+                attribute="opacity"
+                begin="planeout"
+                dur="1000"
+                to="0"
+            ></a-animation>
+        </a-plane>
+        <a-plane id="qr" position="0 0 -.097" width=".02" height=".02" material="src:images/enfoca.png;" opacity=".9">
+            <a-animation
+                attribute="opacity"
+                begin="qrout"
+                dur="1000"
+                to="0"
+            ></a-animation>
+        </a-plane>
+        <a-entity camera></a-entity>
+    </a-scene>
+</body>
+
+<script>
+
+
+
+document.getElementById("cuerpo").addEventListener("click", function(e) 
+{
+    console.log("clickPlano");
+    if(direccion==5)
+    {
+        switch(cuenta)
+        {
+            case 0:{
+            window.open("https://api.whatsapp.com/send?phone=+5493515133546&text=Hola!%20en%20que%20podemos%20ayudarte?");
+            }break;
+            case 1:{
+                window.open("fb://page/1222771374543817");
+            }break;
+            case 2:{
+                window.open("http://www.vinylicografica.com/");
+            }break;
+            case 3:{
+                window.open("https://goo.gl/maps/umPx9omMH62G8ven8");
+            }break;
+            case 4:{
+                window.open("mailto:kvinylico@hotmail.com");
+            }break;
+        }
+         
+    }
+  
+});
+
+document.getElementById("v1").addEventListener("click", function(e) 
+{
+    console.log("clickPlano");
+    if(direccion==5)
+    {
+        switch(cuenta)
+        {
+            case 0:{
+            window.open("https://api.whatsapp.com/send?phone=+5493515133546&text=Hola!%20en%20que%20podemos%20ayudarte?");
+            }break;
+            case 1:{
+                window.open("fb://page/1222771374543817");
+            }break;
+            case 2:{
+                window.open("http://www.vinylicografica.com/");
+            }break;
+            case 3:{
+                window.open("https://goo.gl/maps/umPx9omMH62G8ven8");
+            }break;
+            case 4:{
+                window.open("mailto:kvinylico@hotmail.com");
+            }break;
+        }
+         
+    }
+  
+});
+
+document.getElementById("v2").addEventListener("click", function(e) 
+{
+    console.log("clickPlano");
+    if(direccion==5)
+    {
+        switch(cuenta)
+        {
+            case 0:{
+            window.open("https://api.whatsapp.com/send?phone=+5493515133546&text=Hola!%20en%20que%20podemos%20ayudarte?");
+            }break;
+            case 1:{
+                window.open("fb://page/1222771374543817");
+            }break;
+            case 2:{
+                window.open("http://www.vinylicografica.com/");
+            }break;
+            case 3:{
+                window.open("https://goo.gl/maps/umPx9omMH62G8ven8");
+            }break;
+            case 4:{
+                window.open("mailto:kvinylico@hotmail.com");
+            }break;
+        }
+         
+    }
+  
+});
+
+
+
+
+        var xIni;
+        var yIni;
+        var canvas = document.getElementById('cuerpo');
+        var cuenta = 0;
+        var direccion = 0;
+        //var v1 = document.getElementById("v1");
+        var status = 1;
+        //var v2 = document.getElementById("v2");
+        //var v3 = document.getElementById("v3");
+
+        
+        canvas.addEventListener('touchstart', function(e){
+            
+            if (e.targetTouches.length == 1) 
+            {
+                direccion=5;
+                 
+                var touch = e.targetTouches[0];
+                
+xIni = touch.pageX;
+                yIni = touch.pageY;
+                
+               // alert("toquesito: " + direccion);
+                window.setTimeout(function(e)
+                {
+                    
+                    
+                if(direccion == 0)
+                {
+                    cuenta++;
+                }else if(direccion == 1){
+                    cuenta--;
+                }
+                
+                
+                if(cuenta >= 5)
+                {
+                    cuenta = 0;
+                }else if(cuenta <= -1)
+                {
+                    cuenta = 4;
+                }
+                console.log("cuenta: " + cuenta);
+                switch(cuenta)
+                {
+                    case 0:
+                    {
+                        if(status==1)
+                        {document.getElementById("v2").setAttribute("material",{src:"images/bwa.png"});
+                            
+                        }else{document.getElementById("v1").setAttribute("material",{src:"images/bwa.png"});
+                            
+                        }
+                        
+                        
+                        
+                    }break;
+                    case 1:
+                    {
+                        if(status ==1)
+                        {document.getElementById("v2").setAttribute("material",{src:"images/bfa.png"});
+                            
+                        }else{document.getElementById("v1").setAttribute("material",{src:"images/bfa.png"});
+                            
+                        }
+                        
+                        
+                    }break;
+                    case 2:
+                    {
+                        if(status==1)
+                        {document.getElementById("v2").setAttribute("material",{src:"images/bins.png"});
+                            
+                        }else{document.getElementById("v1").setAttribute("material",{src:"images/bins.png"});
+                            
+                        }
+                        
+                        
+                    }break;
+                    case 3:
+                    {
+                        if(status==1)
+                        {document.getElementById("v2").setAttribute("material",{src:"images/bub.png"});
+                           
+                        }else{document.getElementById("v1").setAttribute("material",{src:"images/bub.png"});
+                            
+                        }
+                        
+                       
+                    }break;
+                    case 4:
+                    {
+                        if(status==1)
+                        {document.getElementById("v2").setAttribute("material",{src:"images/bmail.png"});
+                            
+                        }else{document.getElementById("v1").setAttribute("material",{src:"images/bmail.png"});
+                            
+                        }
+                        
+                        
+                    }break;
+                }
+
+                if(direccion==0)
+                {
+                   
+                        if(status==1)
+                        {
+                            
+                            
+                            document.getElementById("v2").emit("ic");
+                            document.getElementById("v1").emit("derecha");
+                            status=2;
+                            
+                        }else{
+                            
+                            document.getElementById("v1").emit("ic");
+                            document.getElementById("v2").emit("derecha");
+                            status=1;
+                        }
+                        
+                        
+                    
+                }else if(direccion == 1){
+                   
+                        if(status==1)
+                        {
+                            document.getElementById("v2").emit("dc");
+                            document.getElementById("v1").emit("izquierda");
+                            status=2;
+                            console.log("status 1, izquierda");
+                        }else{
+                            document.getElementById("v1").emit("dc");
+                            document.getElementById("v2").emit("izquierda");
+                            status=1;
+                            console.log("status 2, izquierda");
+                        }
+                        
+                    
+                }
+                console.log("status: " + status);
+                },50);
+                 
+                
+                
+            }
+        }, false);
+
+      canvas.addEventListener('touchmove', function(e){
+            if (e.targetTouches.length == 1) 
+            { 
+                var touch = e.targetTouches[0]; 
+                if((touch.pageX>xIni+20))
+                {
+                    console.log("el swipe se genera hacia la derecha");
+                    document.getElementById("swipe").emit("planeout");
+                    direccion=0;
+                    //
+                    
+                    
+                    
+                }else if((touch.pageX<xIni-20)){
+                    console.log("el swipe se genera hacia la izquierda");
+                    document.getElementById("swipe").emit("planeout");
+                    direccion=1;
+                    //alert("izquierda");
+                    
+                    
+                }
+                
+            }
+        }, false);
+
+        
+</script>
+
+</html>

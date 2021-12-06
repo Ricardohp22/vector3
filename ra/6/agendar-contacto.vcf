@@ -1,0 +1,13 @@
+BEGIN:VCARD
+VERSION:3.0
+N:Torres;Julio;;Sr.;
+FN:Julio Torres
+ORG:Kapta Studio
+TITLE:Kapta
+PHOTO;VALUE=URI;TYPE=PNG:http://www.vectorid.mx/ra/6/images/logo_kapta3.png
+TEL;TYPE=WORK,VOICE:+51 930 484 626
+ADR;TYPE=WORK,PREF:;;Peru
+LABEL;TYPE=WORK,PREF:nPeru
+EMAIL:jctorres@kaptastudio.com
+REV:2008-04-24T19:52:43Z
+END:VCARD

@@ -1,0 +1,135 @@
+
+/* GENERAL */
+.button{
+	background:  #0bcbd9;
+	border: 1px solid #0bcbd9;
+}
+
+.green-bg{
+	background:  #0bcbd9;
+}
+
+::selection{
+	background:  #0bcbd9;
+}
+
+/* -- HEADER -- */
+
+.mega-menu .menu-links>li.active>a:before, .mega-menu .menu-links>li:hover>a:before {
+	background-color: #0bcbd9;
+}
+
+.slideouticons label.mainlabel {
+	background-color: #0bcbd9;
+}
+
+.slideouticons input:checked ~ label.mainlabel {
+	color: #0bcbd9;
+}
+
+.slideouticons .iconswrapper ul li a:hover{
+	color: white;
+	background-color: #0bcbd9;
+}
+
+.mega-menu .drop-down-multilevel li:hover{
+	background: #0bcbd9;
+	color: white;
+}
+
+@media (max-width: 992px){
+	.mega-menu .menu-links>li.active{
+		background-color: #0bcbd9;
+	}
+
+}
+
+
+/* -- HOME PAGE -- */
+
+/* Botones */
+#rev_slider_116_1 div .button{
+	background-color: #0bcbd9;
+	border: #0bcbd9;
+}
+
+#rev_slider_116_1 div .button:hover{
+	background-color: #032f54;
+	border: #032f54;
+}
+
+/* Redes sociales */
+/*#rev_slider_116_1 div a i:hover{
+	background-color: #28aac6;
+	border: #28aac6;
+}*/
+
+
+/* QUE HACEMOS */
+
+.heading-title .title:before{
+	background:  #0bcbd9;
+}
+
+.iq-special-1 .iq-box:before{
+	background: rgba(11,203,217,0.7);
+}
+
+/* COMO LO HACEMOS */
+
+.iq-feature5 .left i{
+	color: #0bcbd9;
+}
+
+/* CONTACTO */
+
+.iq-contact2 .heading-left:before{
+	background:  #0bcbd9;
+}
+
+.iq-contact2 .left i{
+	color:  #0bcbd9;
+}
+
+.iq-contact2 .info-share li a:hover{
+	background:  #0bcbd9;
+	border: 1px solid #0bcbd9;
+}
+/* CONTACTO */
+
+/* FOOTER */
+.small-title:before{
+	background:  #0bcbd9;
+}
+
+.iq-footer4 .iq-contact i{
+	color:  #0bcbd9;
+}
+
+.iq-footer4 .iq-copyright a, .iq-footer4 .menu li a:hover{
+	color:  #0bcbd9;
+}
+
+#back-to-top .top:hover{
+	color: white;
+	background-color: #0bcbd9;
+}
+
+/* SERVICIOS */
+
+.iq-tab6 .nav-pills .nav-link.active, .iq-tab6 .nav-pills .show>.nav-link, .iq-tab6 .nav-pills .nav-link:hover {
+	background:  #0bcbd9;
+}
+
+.iq-feature10 .left i{
+	color:  #0bcbd9;
+}
+
+.typo-style1{
+	border-left:3px solid #0bcbd9;
+}
+
+.iq-tab6 .nav-pills{
+	border:1px solid rgba(255, 255, 255, 0.0);
+	background: rgba(255, 255, 255, 0.0);
+}

@@ -1,0 +1,255 @@
+<!doctype HTML>
+<html>
+    <head>
+        <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+    </head>
+    <script src="https://aframe.io/releases/0.8.2/aframe.min.js"></script>
+    <script src="https://rawgit.com/jeromeetienne/AR.js/master/aframe/build/aframe-ar.min.js"></script>
+    <script src="https://rawgit.com/donmccurdy/aframe-extras/master/dist/aframe-extras.loaders.min.js"></script>
+    
+    <script src="scripts/multisrc.js"></script>
+    <script>
+      var cuenta = 0;
+        AFRAME.registerComponent("markerhandler",{
+                init:function() {
+                    console.log('markerhandler-init');
+
+                   markerObj = document.querySelector('a-marker');
+                   markerObj.hidden = true;
+
+                   //dino.setAttribute('animation-mixer', {clip: 'C4D Animation Take', loop: 'repeat'});
+                },
+
+                tick:function() {
+
+                    if (markerObj != null)
+                        {
+                            if (markerObj.object3D.visible == true) {
+                                
+                              if (isTargetFound)
+                                return;
+
+                              isTargetFound = true;
+                              console.log ("marker visible");
+                              cuenta++;
+                              if(cuenta==1)
+                              {
+                                document.getElementById("qr").emit("qrout"); 
+                                document.getElementById("plane").emit("planeout");
+                              }
+                              window.reproducir();
+                              //document.getElementById("videoScene").emit("an1");
+                            }
+                            else {
+                                
+                              if (!isTargetFound)
+                                return;
+
+                              isTargetFound = false;
+                            console.log ("marker invisible");
+                            window.pausar();
+                            }
+                          }
+                  }
+                });
+    </script>
+    <body style='margin : 0px; overflow: hidden;'>
+            
+        <!-- we add detectionMode and matrixCodeType to tell AR.js to recognize barcode markers -->
+        <a-scene embedded arjs='sourceType: webcam; debugUIEnabled: false; detectionMode: mono_and_matrix; matrixCodeType: 3x3; patternRatio: 0.8;'>
+            <a-assets>
+                <!--<video id="video"  src="video/video.mp4"></video>-->
+                <video id="video" width="320" height="180" controls>
+                        <source src="video/dra_kat.mp4" type="video/mp4">
+                    </video>
+                    
+            </a-assets>
+            
+            
+            <a-marker markerhandler emitevents="true" cursor="fuse: false; rayOrigin: mouse" type='pattern' url='pattern-qr_pm.patt'>
+              <!--
+              <a-gltf-model id="robotId" src="modelos/hot/scene.gltf" position="0 0 0" scale=".2 .2 .2" animation-mixer="repetitions:0; timeScale:0;"></a-gltf-model>
+              -->
+
+              <a-entity id="escenaId" position="0 0 0" scale="1 1 1" rotation="0 0 0">
+                  <a-video id="videoScene" position="1 0 -1" src="#video" width="3" height="1.5" position="0 0 0" rotation="-90 0 0" opacity="1"></a-video>
+                  <a-entity position="1.5 0 1" >
+                    <a-plane id="v1v_Id" rotation="-90"  position="-1.5 -.05 -25.2" width=".6" height="50" opacity="0"></a-plane>
+                  <a-plane id="v1_Id" rotation="-90"  position="-26.2 -.05 -.5" width="50" height=".7" opacity="0"></a-plane>
+                  <a-box id="v1Id" position="-1.75 0 -.5" scale=".4 .4 .4" rotation="-90" opacity="0" >
+                          <a-animation
+                              attribute="rotation"
+                              begin="4200"
+                              dur="1000"
+                              to="-90 0 360"
+                              repeat="indefinite">
+  
+                          </a-animation>
+                          <a-animation
+                              attribute="opacity"
+                              begin="4000"
+                              dur="500"
+                              to="1">
+  
+                          </a-animation>
+                      </a-box>
+                      
+                      <a-plane id="v2v_Id" rotation="-90"  position="-0.75 -.05 -25.2" width=".6" height="50" opacity="0"></a-plane>
+                      <a-box id="v2Id" position="-.75 0 -.5" scale=".4 .4 .4" rotation="-90" opacity="0" >
+                          <a-animation
+                              attribute="rotation"
+                              begin="4700"
+                              dur="1000"
+                              to="-90 0 360"
+                              repeat="indefinite">
+  
+                          </a-animation>
+                          <a-animation
+                              attribute="opacity"
+                              begin="4500"
+                              dur="500"
+                              to="1">
+  
+                          </a-animation>
+                      </a-box>
+  
+                      <a-plane id="v3v_Id" rotation="-90"  position="0 -.05 -25.2" width=".6" height="50" opacity="0"></a-plane>
+                      <a-plane id="v3_Id" rotation="-90"  position="24.7 -.05 -.5" width="50" height=".7" opacity="0"></a-plane>
+                      <a-box id="v3Id" position="0.25 0 -.5" scale=".4 .4 .4" rotation="-90" opacity="0" >
+                          <a-animation
+                              attribute="rotation"
+                              begin="5200"
+                              dur="1000"
+                              to="-90 0 360"
+                              repeat="indefinite">
+  
+                          </a-animation>
+                          <a-animation
+                              attribute="opacity"
+                              begin="5000"
+                              dur="500"
+                              to="1">
+  
+                          </a-animation>
+                      </a-box>
+                  </a-entity>
+                  
+              </a-entity>
+                              
+            </a-marker>
+
+            <a-plane  position="-.01 -.03 -.1" width=".02" height=".006" opacity=".3"
+                material="src: images/powvector.png"></a-plane>
+                <a-plane id="plane" position="0 0 -.098" width="2" height="2" material="color:black;" opacity=".4">
+                    <a-animation
+                        attribute="opacity"
+                        begin="planeout"
+                        dur="1000"
+                        to="0"
+                    ></a-animation>
+                </a-plane>
+                <a-plane id="qr" position="0 0 -.097" width=".02" height=".02" material="src:images/enfoca.png;" opacity=".9">
+                    <a-animation
+                        attribute="opacity"
+                        begin="qrout"
+                        dur="1000"
+                        to="0"
+                    ></a-animation>
+                </a-plane>
+
+            <!-- use this <a-entity camera> to support multiple-markers, otherwise use <a-marker-camera> instead of </a-marker> -->
+            <a-entity camera></a-entity>
+        </a-scene>
+        
+    </body>
+    <script>
+
+      var isTargetFound = false;
+      var interacted = false;
+      /**/
+      window.reproducir = function() {
+          document.getElementById("video").play();
+      };
+
+      window.pausar = function() {
+          document.getElementById("video").pause();
+      };
+
+      var v1 = document.getElementById("v1Id");
+  var v2 = document.getElementById("v2Id");
+    var v3 = document.getElementById("v3Id");
+    v1.addEventListener("click", function(e)
+    {
+        window.open("tel:6441560226");
+    });
+    v2.addEventListener("click", function(e)
+    {
+        window.open("https://api.whatsapp.com/send?phone=+5216441560226&text=");
+    });
+    v3.addEventListener("click", function(e)
+    {
+        window.open("https://www.google.com/maps/place/Repobox/@27.5028573,-109.9300814,17z/data=!3m1!4b1!4m5!3m4!1s0x86c815953c7f53c9:0xa8312df775005efc!8m2!3d27.5028526!4d-109.9278927");
+    });
+
+    var v1_ = document.getElementById("v1_Id");
+    v1_.addEventListener("click", function(e)
+    {
+        console.log("click en plano 1");
+        window.open("tel:6441560226");
+    });
+
+    var v3_ = document.getElementById("v3_Id");
+    v3_.addEventListener("click", function(e)
+    {
+        console.log("click en plano 3");
+        window.open("https://www.google.com/maps/place/Repobox/@27.5028573,-109.9300814,17z/data=!3m1!4b1!4m5!3m4!1s0x86c815953c7f53c9:0xa8312df775005efc!8m2!3d27.5028526!4d-109.9278927");
+    });
+
+    var v1v_ = document.getElementById("v1v_Id");
+    v1v_.addEventListener("click", function(e)
+    {
+        console.log("click en plano 1v");
+        window.open("tel:6441560226");
+    });
+
+    var v2v_ = document.getElementById("v2v_Id");
+    v2v_.addEventListener("click", function(e)
+    {
+        console.log("click en plano 2v");
+        window.open("https://api.whatsapp.com/send?phone=+5216441560226&text=");
+    });
+
+    var v3v_ = document.getElementById("v3v_Id");
+    v3v_.addEventListener("click", function(e)
+    {
+        console.log("click en plano 3v");
+        window.open("https://www.google.com/maps/place/Repobox/@27.5028573,-109.9300814,17z/data=!3m1!4b1!4m5!3m4!1s0x86c815953c7f53c9:0xa8312df775005efc!8m2!3d27.5028526!4d-109.9278927");
+    });
+
+
+    var isMobile = {
+    Android: function() {
+        return navigator.userAgent.match(/Android/i);
+    },
+    BlackBerry: function() {
+        return navigator.userAgent.match(/BlackBerry/i);
+    },
+    iOS: function() {
+        return navigator.userAgent.match(/iPhone|iPad|iPod/i);
+    },
+    Opera: function() {
+        return navigator.userAgent.match(/Opera Mini/i);
+    },
+    Windows: function() {
+        return navigator.userAgent.match(/IEMobile/i);
+    },
+    any: function() {
+        return (isMobile.Android() || isMobile.BlackBerry() || isMobile.iOS() || isMobile.Opera() || isMobile.Windows());
+    }
+
+    }
+
+    </script>
+
+
+</html>

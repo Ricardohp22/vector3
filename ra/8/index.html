@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head id="head">
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <!-- <script async src="https://www.googletagmanager.com/gtag/js?id=UA-136675623-1"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+
+    gtag('config', 'UA-136675623-1');
+  </script> -->
+  <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+</head>
+<script src="https://aframe.io/releases/1.0.0/aframe.min.js"></script>
+
+<script src="https://rawgit.com/jeromeetienne/AR.js/master/aframe/build/aframe-ar.min.js"></script>
+<!-- <script src="https://rawgit.com/donmccurdy/aframe-extras/master/dist/aframe-extras.loaders.min.js"></script> -->
+<!-- <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script> -->
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"
+  integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+<script src="scripts/gif.js"> </script>
+<title>Calaveras AR</title>
+<link href="https://fonts.googleapis.com/css?family=Anton&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+  integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+<link rel="stylesheet" href="css/stylera.css">
+<link rel="stylesheet" href="css/loader.css">
+<script>
+  var isTargetFound = false;
+  var interacted = false;
+  var cuenta2 = 0;
+  AFRAME.registerComponent("markerhandler", {
+    init: function () {
+
+      markerObj = document.querySelector('a-marker');
+      markerObj.hidden = true;
+
+    },
+
+    tick: function () {
+
+      if (markerObj != null) {
+        if (markerObj.object3D.visible == true) {
+
+          if (isTargetFound)
+            return;
+
+          isTargetFound = true;
+
+          cuenta2++;
+          if (cuenta2 == 1) {
+            /* document.getElementById("plane").emit("planeout");
+            document.getElementById("qr").emit("qrout"); */
+
+            document.getElementById("plane").emit("planeout2");
+            document.getElementById("qr").emit("qrout2");
+
+            document.getElementById("logo").emit("inLogo");
+            document.getElementById("planeLogo").emit("subelogo");
+
+            window.setTimeout(function () {
+              document.getElementById('fondo').emit('fondoout');
+            }, 2500)
+
+          }
+          //window.reproducir();
+
+        }
+        else {
+
+          if (!isTargetFound)
+            return;
+
+          isTargetFound = false;
+          //window.pausar();
+        }
+      }
+    }
+  });
+</script>
+
+<body style='margin : 0px; overflow: hidden;' id="cuerpo" onload="imgLoaded()">
+  <div id="instrucciones">
+    <img src="images/logo3.png" alt="">
+    <div class="container contInst">
+
+
+      <p id="bienvenida">
+        <span class="anton azul" style="font-weight: 100;">Los dorados de villa</span> te invitan a disfrutar la mejor
+        experiencia en <strong style="color: #921c1e">Realidad Aumentada</strong> !
+      </p>
+
+      <button id="btnEmpezar" onclick="verani()" style="display: none;">Empezar!</button>
+      <div id="loader-containerId" class="loader-container">
+        <div class="loader1"></div>
+        <div class="loader2"></div>
+        <div class="loading">Loading</div>
+      </div>
+
+      <h6 class="azul anton">Importante!</h6>
+      <ol id="listaInst" style="font-weight: 600;">
+        <li>Haz click en Empezar</li>
+        <li>Permite el acceso a tu camara</li>
+        <li>Ubica la etiqueta de la botella</li>
+        <li>Sube el volumen de tu celular y presiona las cajas en Realidad Aumentada</li>
+        <li>Diviertete y observa la Realidad Aumentada!!</li>
+      </ol>
+
+      <p id="nota">
+        Nota: Recuerda que debes permitir el acceso a tu camara para ver animaciones en Realidad Aumentada
+      </p>
+
+    </div>
+
+  </div>
+  <a-scene vr-mode-ui="enabled: false" embedded arjs="sourceType: webcam; debugUIEnabled: false; patternRatio: 0.8;">
+    <a-assets>
+      <img id="calaveras" src="images/calaveras_60_500.gif">
+      <video id="video1" width="320" height="180">
+        <source src="video/ddm-preview.mp4" type="video/mp4">
+      </video>
+      <video id="video2" width="320" height="180">
+        <source src="video/riviera-preview.mp4" type="video/mp4">
+      </video>
+    </a-assets>
+
+    <a-marker markerhandler emitevents="true" type="pattern" url="pattern-targetlddv2.patt">
+      <a-entity rotation="0 0 0">
+        <a-entity id="confeti"
+          animation="startEvents: confout; property: scale; from: 1 1 1; to: .001 .001 .001; dur: 1500;"
+          animation__2="startEvents: confin; property: scale; from: .001 .001 .001; to: 1 1 1; dur: 1500;"></a-entity>
+        <a-entity id="confeti2"
+          animation="startEvents: confout; property: scale; from: 1 1 1; to: .001 .001 .001; dur: 1500;"
+          animation__2="startEvents: confin; property: scale; from: .001 .001 .001; to: 1 1 1; dur: 1500;"></a-entity>
+
+        <a-entity id="pantalla" rotation="-90 90 0" scale=".001 .001 .001"
+          animation="startEvents: anPantalla; property: rotation; dur: 2000; to: -90 0 0;"
+          animation__2="startEvents: anPantalla; property: scale; dur: 2000; to: 1 1 1;"
+          animation__3="startEvents: anPantallaOut; property: rotation; dur: 2000; to: -90 90 0;"
+          animation__4="startEvents: anPantallaOut; property: scale; dur: 2000; to: .001 .001 .001;">
+          <a-video id="videoScene" src="#video1" width="3" height="1.5" position="0 0 0" rotation="0 0 0" opacity="1">
+          </a-video>
+          <!-- <a-box position="0 0 -.35" scale="3 1.5 .6" material="color:red;"></a-box> -->
+        </a-entity>
+
+        <a-plane id="gif" rotation="-90 0 0" opacity="0" width="1.5" height="1.5" material="shader: gif;" gif=""
+          src="#calaveras" position="0 0 0" animation="startEvents: gifin; property: opacity; dur: 1000; to: .9;"
+          animation__2="startEvents: gifOut; property: scale; dur: 2000; to: .001 .001 .001;"
+          animation__3="startEvents: gifin; property: scale; dur: 2000; to: 1 1 1;">
+        </a-plane>
+        <!-- <a-plane id="gifFondo" position=".5 -.1 0" rotation="-90 0 0" opacity="1" width="1" height="1" material="color: #EEEEEE;"></a-plane> -->
+
+
+        <a-entity id="logo" scale=".001 .001 .001"
+          animation=" startEvents: inLogo; property: rotation; dur: 2000; from: 0 -15 0; to: 0 15 0; loop: true; easing: linear; dir: alternate"
+          animation__2=" startEvents: inLogo; property: position; dur: 1000; delay:3000; from: 0 0 0; to: 0 0 -1; easing: linear;"
+          animation__3=" startEvents: inLogo; property: scale; dur: 400; from: .001 .001 .001; to: 1 1 1; easing: linear;">
+          <a-plane id="planeLogo" position="0 0.1 -.5" rotation="-90 0 0" opacity=".9" width="1.5" height=".5"
+            material="src: images/logo.png"></a-plane>
+        </a-entity>
+        <a-plane id="fondo" scale=".7 .7 .7" position="0 .1 0" rotation="-90 0 0" material="src: images/fondo.png"
+          opacity=".7" animation="property: rotation; dur: 1500; to: -90 360 0; easing: linear; loop: true;"
+          animation__2="startEvents:fondoout; property: scale; dur: 1500; to: .0001 .0001 .0001; easing: linear;">
+        </a-plane>
+
+        <a-box id="espanol" collider-check position="-1 .5 1" scale=".0001 .0001 .0001"
+          material="src: images/cuboEs.png;" opacity=".9"
+          animation="property: rotation; dur: 10000; to: 0 360 360; loop: true; easing: linear;"
+          animation__2=" startEvents: btnAudio; property: scale; from: .0001 .0001 .0001; dur: 1500; to: .5 .5 .5;"
+          animation__3=" startEvents: btnAudioout; property: scale; dur: 1500; from: .5 .5 .5; to: .0001 .0001 .0001;">
+        </a-box>
+        <a-box id="ingles" collider-check position="1 .5 1" scale=".0001 .0001 .0001" material="src: images/cuboEn.png;"
+          opacity=".9" animation="property: rotation; dur: 8000; to: 0 360 360; loop: true; easing: linear;"
+          animation__2=" startEvents: btnAudio; property: scale; dur: 1500; to: .5 .5 .5;"
+          animation__3=" startEvents: btnAudioout; property: scale; dur: 1500; from: .5 .5 .5; to: .0001 .0001 .0001;">
+        </a-box>
+        <a-plane id="espanol1" collider-check position="-25 .5 1" width="50" height="1" rotation="-90 0 0" opacity="0">
+        </a-plane>
+        <a-plane id="ingles1" collider-check position="25 .5 1" width="50" height="1" rotation="-90 0 0" opacity="0">
+        </a-plane>
+
+      </a-entity>
+
+    </a-marker>
+
+
+    <a-plane id="plane" position="0 0 -.098" width="2" height="2" material="color:black;" opacity=".4"
+      animation="startEvents: planeout; property: opacity; dur: 1000; to: 0;"
+      animation__2="startEvents: planeout2; property: scale; dur: 3000; to: .0001 .0001 .0001;">
+
+    </a-plane>
+    <a-plane id="qr" position="0 0 -.097" width=".02" height=".02" material="src:images/enfoca.png;" opacity=".9"
+      animation="startEvents: qrout; property: opacity; dur: 1000; to: 0;"
+      animation__2="startEvents: qrout2; property: scale; dur: 3000; to: .0001 .0001 .0001;">
+
+
+    </a-plane>
+    <a-entity camera></a-entity>
+    <!-- <a-cursor position="0 0 -.2"></a-cursor> -->
+  </a-scene>
+</body>
+
+<script>
+  /* window.reproducir = function () {
+    document.getElementById("video").play();
+  };
+ 
+  window.pausar = function () {
+    document.getElementById("video").pause();
+  }; */
+  var widthScreen = screen.width;
+  var heightScreen = screen.height;
+  var startAni = 0;
+  var videoPlaying = 0;
+  console.log(widthScreen);
+  console.log(heightScreen);
+
+  /*   AFRAME.registerComponent('collider-check', {
+      init: function () {
+        this.el.addEventListener('click', function (evt) {
+          console.log('Player hit something!');
+          console.log(evt);
+        });
+      }
+    }); */
+    
+
+  document.getElementById('cuerpo').addEventListener('click', function (ev) {
+    var clicx = window.event.clientX;
+    var clicy = window.event.clientY;
+    console.log('click en x:' + clicx);
+    console.log('click en y:' + clicy);
+    
+    if (startAni==1 && videoPlaying == 0) {
+      if (clicx < (widthScreen / 2)) {
+        audFondo.volume = 0;
+        document.getElementById('espanol').emit('btnAudioout');
+        document.getElementById('ingles').emit('btnAudioout');
+        document.getElementById("pantalla").emit("anPantalla");
+        document.getElementById("gif").emit("gifOut");
+        document.getElementById("confeti").emit("confout");
+        document.getElementById("confeti2").emit("confout");
+        document.getElementById("videoScene").setAttribute('src', '#video1');
+        play1();
+      } else {
+        audFondo.volume = 0;
+        document.getElementById('espanol').emit('btnAudioout');
+        document.getElementById('ingles').emit('btnAudioout');
+        document.getElementById("pantalla").emit("anPantalla");
+        document.getElementById("gif").emit("gifOut");
+        document.getElementById("confeti").emit("confout");
+        document.getElementById("confeti2").emit("confout");
+        document.getElementById("videoScene").setAttribute('src', '#video2');
+        play2();
+      }
+    }
+    if(videoPlaying == 1){
+      window.open('https://youtu.be/DQrqVq5nf34');
+    }else if(videoPlaying == 2){
+      window.open('https://youtu.be/6WkhkoDR_qc');
+    }
+
+  });
+
+
+  function play1() {
+    document.getElementById("video1").play();
+    window.setTimeout(function(){
+      videoPlaying = 1;
+    },500);
+    
+  }
+  function pause1() {
+    document.getElementById("video1").pause();
+  }
+  function play2() {
+    window.setTimeout(function(){
+      videoPlaying = 2;
+    },500);
+    document.getElementById("video2").play();
+  }
+  function pause2() {
+    document.getElementById("video2").pause();
+  }
+
+  window.onload = function () {
+    let status = 0;
+    let gifG;
+    var intervalID;
+    var touchCuenta = 0;
+
+
+    /* document.getElementById('espanol').addEventListener('click', function () {
+      audFondo.volume = 0;
+      document.getElementById('espanol').emit('btnAudioout');
+      document.getElementById('ingles').emit('btnAudioout');
+      document.getElementById("pantalla").emit("anPantalla");
+      document.getElementById("gif").emit("gifOut");
+      document.getElementById("videoScene").setAttribute('src', '#video1');
+      play1();
+      console.log('click');
+ 
+    })
+    document.getElementById('ingles').addEventListener('click', function () {
+      audFondo.volume = 0;
+      document.getElementById('espanol').emit('btnAudioout');
+      document.getElementById('ingles').emit('btnAudioout');
+      document.getElementById("pantalla").emit("anPantalla");
+      document.getElementById("gif").emit("gifOut");
+      document.getElementById("videoScene").setAttribute('src', '#video2');
+      play2();
+      console.log('click');
+    })
+ 
+    document.getElementById('espanol1').addEventListener('click', function () {
+      audFondo.volume = 0;
+      document.getElementById('espanol').emit('btnAudioout');
+      document.getElementById('ingles').emit('btnAudioout');
+      document.getElementById("pantalla").emit("anPantalla");
+      document.getElementById("gif").emit("gifOut");
+      document.getElementById("videoScene").setAttribute('src', '#video1');
+      play1();
+      console.log('click');
+    })
+    document.getElementById('ingles1').addEventListener('click', function () {
+      audFondo.volume = 0;
+      document.getElementById('espanol').emit('btnAudioout');
+      document.getElementById('ingles').emit('btnAudioout');
+      document.getElementById("pantalla").emit("anPantalla");
+      document.getElementById("gif").emit("gifOut");
+      document.getElementById("videoScene").setAttribute('src', '#video2');
+      play2();
+      console.log('click');
+    }) */
+
+
+    gifG = document.getElementById('gif');
+    gifG.pause();
+
+    var idx = 0;
+
+    function gifIteration() {
+
+      gifG.components.material.shader.nextFrame(idx);
+      idx++;
+
+      if (idx > 60) {//numero de frames en gif
+        idx = 0;
+      }
+    }
+
+    document.getElementById('logo').addEventListener('animationcomplete__2', function () {
+
+
+      window.setTimeout(function () {
+        gifG.components.material.shader.nextFrame(0);
+        gif.play();
+        document.getElementById('gif').emit('gifin');
+        document.getElementById('confeti').innerHTML = confetis;
+        document.getElementById('confeti2').innerHTML = confetis2;
+      }, 2000);
+      window.setTimeout(function () {
+        intervalID = window.setInterval(gifIteration, 100);
+        console.log(gifG);
+        document.getElementById('espanol').emit('btnAudio');
+        document.getElementById('ingles').emit('btnAudio');
+      }, 2500);
+
+    });
+
+
+
+    /* var iniciador = 1;
+    audFondo.addEventListener('canplay', function(){
+      if(iniciador){
+        window.setTimeout(function(){
+          audFondo.play();
+        },5000);
+      }
+      
+    }) */
+    /* window.setInterval(function(){
+          audFondo.play();
+          console.log('playing');
+        },3000); */
+
+
+    document.getElementById('video1').addEventListener('ended', function () {
+      document.getElementById('pantalla').emit('anPantallaOut');
+      document.getElementById('gif').emit('gifin');
+      document.getElementById('espanol').emit('btnAudio');
+      document.getElementById('ingles').emit('btnAudio');
+      document.getElementById("confeti").emit("confin");
+      document.getElementById("confeti2").emit("confin");
+      audFondo.volume = .4;
+      videoPlaying = 0;
+    });
+    document.getElementById('video2').addEventListener('ended', function () {
+      document.getElementById('pantalla').emit('anPantallaOut');
+      document.getElementById('gif').emit('gifin');
+      document.getElementById('espanol').emit('btnAudio');
+      document.getElementById('ingles').emit('btnAudio');
+      document.getElementById("confeti").emit("confin");
+      document.getElementById("confeti2").emit("confin");
+      audFondo.volume = .4;
+      videoPlaying = 0;
+    });
+    console.log('pagina lista');
+    document.getElementById('btnEmpezar').style.display = 'inline-block';
+    document.getElementById('loader-containerId').style.display = 'none';
+
+
+  }
+
+  //fuera del onload
+
+
+  function verani() {
+    audFondo.play();
+    console.log('playing');
+    document.getElementById('instrucciones').style.display = 'none';
+    
+    window.setTimeout(function(){
+      startAni = 1;
+    },500);
+    
+
+  }
+  var audFondo = new Audio();
+  audFondo.src = "audio/fondo-comp.mp3";
+  audFondo.loop = true;
+  audFondo.volume = .4;
+  var confetis = '';
+  var confetis2 = '';
+  for (var i = 0; i < 30; i++) {
+    var posx = Math.random() * .2;
+    var posy = Math.random() * .2;
+    var posz = Math.random() * .2;
+    var rot = Math.random() * 180;
+    var R = parseInt((Math.random() * 240) + 16).toString(16);
+    var G = parseInt((Math.random() * 240) + 16).toString(16);
+    var B = parseInt((Math.random() * 240) + 16).toString(16);
+
+    confetis += `<a-entity position="${posx - .7} ${posy} ${posz}" rotation="0 30 0">
+    <a-entity rotation="${rot} 0 ${rot}" scale=".01 .01 .01"
+    animation="property: position; delay: ${i * 100}; dur: 1500; from: 0 0 .5; to: 0 0 -1; loop: 10; easing: linear;"
+    animation__2="property: scale; delay: ${i * 100}; dur: 10; to: 1 1 1; easing: linear;"
+    animation__3="property: scale; delay: ${i * 100 + 15000}; dur: 10; to: .01 .01 .01; easing: linear;">
+      <a-entity class="paper" scale=".05 .05 .05"
+          animation="property: rotation; dur: 1500; from: 0 0 0; to: 360 360 360; loop: true; easing: linear;"
+          >
+          <a-plane color="#${R}${G}${B}"></a-plane>
+          <a-plane color="#${R}${G}${B}" position="0 -.1 0" rotation="0 180 0"></a-plane>
+      </a-entity>
+    </a-entity>
+          
+        </a-entity>`;
+  }
+
+  for (var i = 0; i < 30; i++) {
+    var posx = Math.random() * .2;
+    var posy = Math.random() * .2;
+    var posz = Math.random() * .2;
+    var rot = Math.random() * 180;
+    var R = parseInt((Math.random() * 240) + 16).toString(16);
+    var G = parseInt((Math.random() * 240) + 16).toString(16);
+    var B = parseInt((Math.random() * 240) + 16).toString(16);
+
+    confetis += `<a-entity position="${posx + .7} ${posy} ${posz}" rotation="0 -30 0">
+    <a-entity rotation="${rot} 0 ${rot}" scale=".01 .01 .01"
+    animation="property: position; delay: ${i * 100}; dur: 1500; from: 0 0 .5; to: 0 0 -1; loop: 10; easing: linear;"
+    animation__2="property: scale; delay: ${i * 100}; dur: 10; to: 1 1 1; easing: linear;"
+    animation__3="property: scale; delay: ${i * 100 + 15000}; dur: 10; to: .01 .01 .01; easing: linear;">
+      <a-entity class="paper" scale=".05 .05 .05"
+          animation="property: rotation; dur: 1500; from: 0 0 0; to: 360 360 360; loop: true; easing: linear;"
+          >
+          <a-plane color="#${R}${G}${B}"></a-plane>
+          <a-plane color="#${R}${G}${B}" position="0 -.1 0" rotation="0 180 0"></a-plane>
+      </a-entity>
+    </a-entity>
+          
+        </a-entity>`;
+  }
+
+  for (var i = 0; i < 30; i++) {
+    var posx = Math.random() * 1.6;
+    var posy = Math.random() * .2;
+    var posz = Math.random() * .2;
+    var rot = Math.random() * 180;
+    var R = parseInt((Math.random() * 240) + 16).toString(16);
+    var G = parseInt((Math.random() * 240) + 16).toString(16);
+    var B = parseInt((Math.random() * 240) + 16).toString(16);
+
+    confetis2 += `<a-entity position="${posx - .8} 0 0" rotation="0 0 0">
+    <a-entity rotation="${rot} 0 ${rot}" scale=".01 .01 .01"
+    animation="property: position; delay: ${i * 100}; dur: 1500; from: 0 0 -1; to: 0 0 .5; loop: 10; easing: linear;"
+    animation__2="property: scale; delay: ${i * 100}; dur: 10; to: 1 1 1; easing: linear;">
+      <a-entity class="paper" scale=".05 .05 .05"
+          animation="property: rotation; dur: 1500; from: 0 0 0; to: 360 360 360; loop: true; easing: linear;"
+          >
+          <a-plane color="#${R}${G}${B}"></a-plane>
+          <a-plane color="#${R}${G}${B}" position="0 -.1 0" rotation="0 180 0"></a-plane>
+      </a-entity>
+    </a-entity>
+          
+        </a-entity>`;
+  }
+
+  /* var papelito = document.getElementById('paper');
+  var z=0;
+  window.setInterval(function(){
+    if(z<1){
+      z+=.007;
+    }else if(z>-1){
+      z-=.007;
+    }
+
+    papelito.setAttribute('position',{x:0,y:0,z:z});
+  },10); */
+
+
+
+</script>
+
+</html>
